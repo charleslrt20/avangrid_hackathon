@@ -2,6 +2,7 @@
 
 Outputs
   docs/figures/classification_summary.png   labels vs label-implied totals vs physics-detected counts
+  docs/figures/exemplars_carpet_deck.png    six exemplar homes, full year, readable at slide size
 """
 
 from __future__ import annotations
@@ -51,9 +52,40 @@ def classification_summary() -> None:
     P.save(fig, "classification_summary")
 
 
+DECK_CLASSES = ["EV, L2 charging", "Heat pump + resistance backup", "Resistive heat", "Central AC", "Pool pump",
+                "Solar PV"]
+
+
+def exemplars_carpet_deck() -> None:
+    """The six clearest appliance signatures from the task 2.3 exemplars, sized for a slide."""
+    import numpy as np
+    from avangrid import app_data as A
+    ex = pd.read_parquet(C.OUTPUTS / "exemplars.parquet").set_index("cls")
+    fig, axes = plt.subplots(2, 3, figsize=(13, 6.4))
+    starts = [0, 30, 61, 91, 122, 153, 181, 212, 242, 273, 303, 334]
+    for ax, cls in zip(axes.flat, DECK_CLASSES):
+        x = A.load_row(int(ex.at[cls, "customer_id"])).reshape(-1, 24).T
+        im = ax.imshow(x, aspect="auto", origin="lower", cmap="viridis", vmin=0,
+                       vmax=max(float(np.nanpercentile(x, 99.5)), 0.5), interpolation="nearest")
+        ax.grid(False)
+        ax.set_xticks(starts, ["S", "O", "N", "D", "J", "F", "M", "A", "M", "J", "J", "A"], fontsize=10)
+        ax.set_yticks([0, 6, 12, 18, 23])
+        ax.tick_params(labelsize=10)
+        lab = " [labeled]" if bool(ex.at[cls, "picked_from_labeled"]) else ""
+        ax.set_title(f"{cls}{lab}\n{int(ex.at[cls, 'class_size']):,} homes in class", fontsize=12)
+        cb = fig.colorbar(im, ax=ax, pad=0.02, fraction=0.045)
+        cb.ax.tick_params(labelsize=9)
+        cb.set_label("kWh", fontsize=9)
+    for ax in axes[:, 0]:
+        ax.set_ylabel("Hour of day", fontsize=11)
+    fig.tight_layout()
+    P.save(fig, "exemplars_carpet_deck")
+
+
 def main() -> None:
     P.style()
     classification_summary()
+    exemplars_carpet_deck()
 
 
 if __name__ == "__main__":
