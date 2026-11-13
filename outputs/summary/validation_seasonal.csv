@@ -1,0 +1,10 @@
+flag,expected,extra_kwh_day_winter,extra_kwh_day_shoulder,extra_kwh_day_summer,pass
+Electric heat (any),winter,43.649017,18.345995,6.0658894,True
+Heat pump (HP / HP+backup),winter,31.940186,12.4508095,5.7993565,True
+Resistive heat,winter,79.980896,32.054222,7.5113554,True
+Central AC,summer,7.7662783,7.237291,15.704588,True
+Pool pump,summer,6.8348837,9.445898,23.670645,True
+EV home charging (L2 or L1),all year,30.524597,21.673695,25.831444,True
+Water heater (low conf.),all year,35.465096,23.445656,17.581453,True
+Hot tub (low conf.),all year,27.651999,18.39103,14.378462,True
+Solar PV,less in summer,14.074639,3.8568892,-3.8284006,True

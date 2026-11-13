@@ -1,6 +1,6 @@
 # Feature dictionary (task 1.2)
 
-Built by `scripts/04_features.py` in 55s for 34,238 customers (33,927 in the modeling population). Thresholds come from equipment ratings in `src/avangrid/config.py`, never from labels.
+Built by `scripts/04_features.py` in 45s for 34,238 customers (33,927 in the modeling population). Thresholds come from equipment ratings in `src/avangrid/config.py`, never from labels.
 
 Confidence reflects what hourly data can resolve: fast cycling loads (water heater, hot tub) average into small hourly bumps, so those scores are tagged low.
 
@@ -38,16 +38,16 @@ Winter coincident peak is 79% of the summer coincident peak today.
 | `ev_l2_evening_share` | ev | high | Share of L2 blocks starting 18:00-02:00 | 28.6% | 0.286 | 0.66 | 0.45 | 0.60 |
 | `ev_l1_night_share` | ev | medium | Share of mild nights with a flat 1.0-2.2 kWh overnight plateau | 100.0% | 0 | 0.64 | 0.56 | 0.55 |
 | `night_quiet_kwh` | ev | high | Customer's quiet-night hourly load (20th pct of mild nights) | 100.0% | 0.316 | 0.64 | 0.67 | 0.67 |
-| `pool_timer_score` | pool | medium | Same-hour on and off steps on summer days, minus winter | 100.0% | 0.0566 | 0.62 | 0.52 | 0.59 |
+| `pool_timer_score` | pool | medium | Same-hour on and off steps on summer days, minus winter | 100.0% | 0.0566 | 0.63 | 0.52 | 0.59 |
 | `pool_run_hours` | pool | medium | Hours between the timer on and off steps | 100.0% | 5 | 0.51 | 0.50 | 0.56 |
 | `summer_base_lift_kwh` | pool | medium | Jul-Aug minus Apr-May 10th-pct hourly load | 99.8% | 0.0377 | 0.48 | 0.44 | 0.30 |
-| `wh_bump_freq` | water_heater | low | Share of mild days with a ≥1.5 kWh morning bump (hourly data blurs 20-40 min bursts) | 100.0% | 0.025 | 0.56 | 0.63 | 0.54 |
+| `wh_bump_freq` | water_heater | low | Share of mild days with a ≥1.5 kWh morning bump (hourly data blurs 20-40 min bursts) | 100.0% | 0.0252 | 0.56 | 0.63 | 0.54 |
 | `wh_morning_bump_kwh` | water_heater | low | Median morning bump over the overnight minimum | 100.0% | 0.28 | 0.56 | 0.67 | 0.46 |
 | `hot_tub_cycle_share` | hot_tub | low | Share of mild nights with isolated heater-cycling bumps | 100.0% | 0.0167 | 0.64 | 0.61 | 0.62 |
-| `pv_midday_zero_summer` | pv | high | Share of Apr-Aug 10-15h hours at exactly 0 kWh (exports clipped) | 100.0% | 0 | 0.51 | 0.57 | 0.97 |
-| `pv_night_zero_summer` | pv | high | Share of Apr-Aug 00-05h hours at 0 kWh (vacancy check) | 100.0% | 0 | 0.49 | 0.49 | 0.49 |
+| `pv_midday_zero_summer` | pv | high | Share of Apr-Aug 10-15h hours at exactly 0 kWh (exports clipped) | 99.9% | 0 | 0.51 | 0.57 | 0.97 |
+| `pv_night_zero_summer` | pv | high | Share of Apr-Aug 00-05h hours at 0 kWh (vacancy check) | 99.9% | 0 | 0.49 | 0.49 | 0.49 |
 | `pv_midday_zero_winter` | pv | high | Share of Dec-Jan 10-15h hours at 0 kWh | 100.0% | 0 | 0.54 | 0.52 | 0.88 |
-| `pv_zero_season_contrast` | pv | high | Summer minus winter midday zero share | 100.0% | 0 | 0.50 | 0.57 | 0.97 |
+| `pv_zero_season_contrast` | pv | high | Summer minus winter midday zero share | 99.9% | 0 | 0.50 | 0.57 | 0.97 |
 | `pv_midday_dip` | pv | medium | 1 - midday load / mean of 7-9h and 17-19h load, Apr-Aug | 99.9% | 0.042 | 0.60 | 0.52 | 0.94 |
 | `annual_kwh` | size | high | Annual kWh (mean × 8,760) | 100.0% | 6.72e+03 | 0.67 | 0.73 | 0.58 |
 | `peak_kw` | peak | high | Max hourly kWh | 100.0% | 5.41 | 0.72 | 0.68 | 0.67 |
@@ -66,7 +66,7 @@ Winter coincident peak is 79% of the summer coincident peak today.
 | `cp_share_winter` | peak | high | Customer's share of the winter coincident-peak load | 100.0% | 2.14e-05 | 0.64 | 0.76 | 0.66 |
 | `cp_ratio_summer` | peak | high | Summer CP load / own mean load | 99.8% | 2.18 | 0.48 | 0.34 | 0.28 |
 | `cp_ratio_winter` | peak | high | Winter CP load / own mean load | 100.0% | 1.47 | 0.50 | 0.69 | 0.70 |
-| `peak_day_persistence_summer` | peak | high | Share of the top 10 summer system days where own max ≥ own p95 | 100.0% | 0.9 | 0.45 | 0.37 | 0.41 |
+| `peak_day_persistence_summer` | peak | high | Share of the top 10 summer system days where own max ≥ own p95 | 99.8% | 0.9 | 0.44 | 0.37 | 0.41 |
 | `peak_day_persistence_winter` | peak | high | Share of the top 10 winter system days where own max ≥ own p95 | 100.0% | 0.6 | 0.47 | 0.67 | 0.61 |
 
 AUC = how well the single raw feature ranks labeled vs unlabeled customers (0.5 = no signal, <0.5 = signal in the other direction). Unlabeled customers include unlabeled owners (PU setting), so these understate true separability.
@@ -94,6 +94,10 @@ Also stored: 12 monthly weather-normalised residuals (`resid_mXX_mon`), seasonal
 - `ev_l2_block_hours`: 24,221 NaN (no L2 blocks → no block statistics)
 - `ev_l2_block_kw`: 24,221 NaN (no L2 blocks → no block statistics)
 - `ev_l2_evening_share`: 24,221 NaN (no L2 blocks → no block statistics)
+- `pool_timer_on`: 2 NaN
+- `pool_timer_off`: 2 NaN
+- `pool_timer_score`: 2 NaN
+- `pool_run_hours`: 2 NaN
 - `summer_base_lift_kwh`: 79 NaN
 - `mean_kw_winter`: 2 NaN
 - `peak_kw_winter`: 2 NaN
@@ -101,7 +105,13 @@ Also stored: 12 monthly weather-normalised residuals (`resid_mXX_mon`), seasonal
 - `cp_kw_summer`: 56 NaN
 - `cp_share_summer`: 56 NaN
 - `cp_ratio_summer`: 56 NaN
+- `peak_day_persistence_summer`: 60 NaN
 - `cp_kw_winter`: 13 NaN
 - `cp_share_winter`: 13 NaN
 - `cp_ratio_winter`: 13 NaN
+- `peak_day_persistence_winter`: 13 NaN
+- `pv_midday_zero_summer`: 25 NaN
+- `pv_night_zero_summer`: 25 NaN
+- `pv_midday_zero_winter`: 15 NaN
 - `pv_midday_dip`: 39 NaN
+- `pv_zero_season_contrast`: 40 NaN

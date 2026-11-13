@@ -82,6 +82,67 @@ def pu_scores(X: pd.DataFrame, y: np.ndarray, seed: int = C.SEED) -> tuple[np.nd
     return g, model, metrics
 
 
+# Bagged PU LightGBM (Mordelet & Vert 2014) ranks EV owners; HP keeps the logistic ranking. Chosen in task 2.1
+# by the rule fixed in PLAN.md beforehand (adopt only if it beats logistic on held-out recall): for EV it does
+# at the top 1/2/5% cut-offs on all 5 CV seeds tried; for HP it does not (docs/validation.md).
+PU_LGBM_APPS = ("ev",)
+PU_BAGS = 10
+PU_BAG_RATIO = 5      # unlabeled drawn per bag = 5 x labeled positives
+
+
+def lgbm(seed: int):
+    from lightgbm import LGBMClassifier
+    return LGBMClassifier(n_estimators=200, learning_rate=0.05, num_leaves=15, min_child_samples=20,
+                          subsample=0.8, subsample_freq=1, colsample_bytree=0.8, reg_lambda=1.0,
+                          random_state=seed, verbose=-1)
+
+
+def bagged_pu_fit(X: pd.DataFrame, y: np.ndarray, rows: np.ndarray | None = None, seed: int = C.SEED,
+                  rng: np.random.Generator | None = None) -> list:
+    """Each bag = all labeled positives vs a fresh random draw of unlabeled customers."""
+    rows = np.arange(len(y)) if rows is None else rows
+    rng = np.random.default_rng(seed) if rng is None else rng
+    pos, unl = rows[y[rows]], rows[~y[rows]]
+    models = []
+    for b in range(PU_BAGS):
+        idx = np.r_[pos, rng.choice(unl, size=min(len(unl), PU_BAG_RATIO * len(pos)), replace=False)]
+        models.append(lgbm(seed + b).fit(X.iloc[idx], y[idx]))
+    return models
+
+
+def bagged_predict(models: list, X: pd.DataFrame) -> np.ndarray:
+    return np.mean([m.predict_proba(X)[:, 1] for m in models], axis=0)
+
+
+def bagged_pu_oof(X: pd.DataFrame, y: np.ndarray, seed: int = C.SEED) -> np.ndarray:
+    """Out-of-fold scores on the same folds as `pu_scores`."""
+    cv = StratifiedKFold(C.CV_FOLDS, shuffle=True, random_state=seed)
+    rng = np.random.default_rng(seed)
+    g = np.zeros(len(y))
+    for tr, te in cv.split(X, y):
+        g[te] = bagged_predict(bagged_pu_fit(X, y, tr, seed, rng), X.iloc[te])
+    return g
+
+
+def bagged_shap(models: list, X: pd.DataFrame, top: int = 12, sample: int = 5000, seed: int = C.SEED) -> pd.DataFrame:
+    """Mean |SHAP| (log-odds) averaged over the bags, on a random sample of customers."""
+    import shap
+    idx = np.random.default_rng(seed).choice(len(X), size=min(sample, len(X)), replace=False)
+    Xs = X.iloc[idx]
+    vals, signed = [], []
+    for m in models:
+        sv = shap.TreeExplainer(m).shap_values(Xs)
+        sv = sv[1] if isinstance(sv, list) else sv
+        vals.append(np.abs(sv).mean(axis=0))
+        # direction: correlation between feature value and its SHAP value
+        signed.append([np.corrcoef(Xs.iloc[:, j], sv[:, j])[0, 1] if Xs.iloc[:, j].std() > 0 else 0.0
+                       for j in range(Xs.shape[1])])
+    df = pd.DataFrame({"feature": X.columns, "mean_abs_shap": np.mean(vals, axis=0),
+                       "direction": np.where(np.nanmean(signed, axis=0) >= 0, "higher value → ranked higher",
+                                             "higher value → ranked lower")})
+    return df.sort_values("mean_abs_shap", ascending=False).head(top).reset_index(drop=True)
+
+
 def odds_ratios(model: Pipeline, columns: list[str], top: int = 12) -> pd.DataFrame:
     coef = model[-1].coef_[0]
     df = pd.DataFrame({"feature": columns, "coef_per_sd": coef, "odds_ratio_per_sd": np.exp(coef)})

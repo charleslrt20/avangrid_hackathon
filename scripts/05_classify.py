@@ -19,10 +19,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import joblib  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from sklearn.metrics import roc_auc_score  # noqa: E402
 
 from avangrid import classify as K  # noqa: E402
 from avangrid import config as C  # noqa: E402
 from avangrid import io  # noqa: E402
+from avangrid.features.shape import zero_share  # noqa: E402
 
 lines: list[str] = []
 
@@ -44,7 +46,7 @@ def main() -> None:
     hours = io.load_hours()
     mat = io.load_matrix()
     summer_evening = (hours.month.isin([6, 7, 8]) & hours.hod.between(17, 21)).to_numpy()
-    evening_zero = np.nanmean(np.asarray(mat[:, summer_evening]) == 0, axis=1)
+    evening_zero = zero_share(np.asarray(mat[:, summer_evening]))
 
     phys = K.physics_flags(f, evening_zero)
     res = pd.concat([f[["customer_id", "in_model", "label_ev", "label_hp", "label_pv"]], phys], axis=1)
@@ -55,9 +57,17 @@ def main() -> None:
     metrics = {}
     for app in ("ev", "hp"):
         y = fm[f"label_{app}"].to_numpy()
-        g, model, mt = K.pu_scores(X, y)
+        g, model, mt = K.pu_scores(X, y)   # logistic: c-hat, Elkan-Noto flags, odds ratios
         joblib.dump(model, C.MODELS / f"pu_{app}.joblib")
         metrics[app] = mt
+        metrics[app]["ranking_model"] = "PU logistic"
+        if app in K.PU_LGBM_APPS:          # ranking model chosen in task 2.1 (docs/validation.md)
+            g = K.bagged_pu_oof(X, y)
+            bags = K.bagged_pu_fit(X, y)
+            joblib.dump(bags, C.MODELS / f"pu_{app}_lgbm.joblib")
+            metrics[app]["ranking_model"] = "Bagged PU LightGBM"
+            metrics[app]["ranking_cv_auc"] = roc_auc_score(y, g)
+            metrics[app]["shap"] = K.bagged_shap(bags, X)
         score = np.full(len(f), np.nan)
         score[im] = g
         res[f"{app}_pu_score"] = score
@@ -92,6 +102,10 @@ def main() -> None:
     m = metrics["ev"]
     emit(f"- PU logistic CV AUC **{m['cv_auc']:.3f}** (fold s.d. {m['cv_auc_sd']:.3f}); "
          f"benchmark to beat {C.BENCHMARK_AUC['ev']}.")
+    if m["ranking_model"] != "PU logistic":
+        emit(f"- **Ranking model: {m['ranking_model']}** (CV AUC {m['ranking_cv_auc']:.3f}), chosen in task 2.1 because it "
+             "finds more held-out labeled EVs in the top 1/2/5% on every CV split tried (docs/validation.md). "
+             "The logistic model above still gives c-hat, the Elkan-Noto counts and the odds ratios.")
     emit(f"- Elkan-Noto estimate of c from the data: **{m['c_hat_elkan_noto']:.3f}** vs 0.25 in the brief. "
          "With c = 0.25, the Elkan-Noto rule (g/c ≥ 0.5) flags "
          + ", ".join(f"{m[f'en_flags_c{c}']} (c={c})" for c in C.PU_C_SENSITIVITY)
@@ -110,7 +124,8 @@ def main() -> None:
          f"{phys_n / C.IMPLIED_COUNTS['ev']:.1f}x the implied total). Labeled recall {r.ev_physics[r.label_ev].mean():.1%}; "
          f"SCAR-implied precision {K.scar_precision(r.ev_physics, r.label_ev):.0%}.")
     emit()
-    emit("PU ranking: labeled share in the top of the ranking (the ranking is out-of-fold, so this is a fair check):")
+    emit(f"PU ranking ({m['ranking_model']}): labeled share in the top of the ranking (the ranking is out-of-fold, "
+         "so this is a fair check):")
     emit()
     rows = []
     order = r.sort_values("ev_pu_score", ascending=False)
@@ -136,9 +151,14 @@ def main() -> None:
                           ["annual_kwh", "peak_kw", "ev_l2_per_week", "ev_l2_block_kw", "ev_l2_evening_share",
                            "heat_slope", "cool_slope", "pv"])
     md(sb.reset_index().rename(columns={"index": "feature"}))
-    emit("Top PU coefficients (odds ratio per s.d. after a normal-quantile transform):")
+    emit("Top PU logistic coefficients (odds ratio per s.d. after a normal-quantile transform):")
     emit()
     md(m["odds"])
+    if "shap" in m:
+        emit(f"{m['ranking_model']} explanation: mean |SHAP| (log-odds) averaged over the bags, 5,000 random customers. "
+             "Direction = sign of the correlation between a feature and its SHAP value.")
+        emit()
+        md(m["shap"])
 
     # ------------------------------------------------------------------ HP / heating
     emit("## Heating type and heat pumps")
@@ -204,10 +224,10 @@ def main() -> None:
     ], columns=["appliance", "customers", "confidence", "note"])
     inv["share"] = inv.customers / n
     md(inv)
-    emit("Independent plausibility (to do in task 2.1): compare these shares with EIA RECS Northeast saturation; "
-         "RECS is a check only and was not used to tune anything.")
+    emit("Independent plausibility against EIA RECS 2020 New England: docs/validation.md (RECS is a check only and "
+         "was not used to tune anything).")
     inv.to_csv(C.OUTPUTS_SUMMARY / "appliance_counts.csv", index=False)
-    pd.DataFrame({k: {kk: vv for kk, vv in v.items() if kk != "odds"} for k, v in metrics.items()}).to_csv(
+    pd.DataFrame({k: {kk: vv for kk, vv in v.items() if kk not in ("odds", "shap")} for k, v in metrics.items()}).to_csv(
         C.OUTPUTS_SUMMARY / "classification_metrics.csv")
     (C.DOCS / "classification.md").write_text("\n".join(lines) + "\n")
     print(f"\ndone in {time.time() - t0:.0f}s")

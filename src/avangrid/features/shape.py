@@ -6,9 +6,14 @@ import numpy as np
 import pandas as pd
 
 from avangrid import config as C
-from avangrid.features.events import nanquantile_axis1
+from avangrid.features.events import nan_share, nanquantile_axis1
 
 SEASONS = ("winter", "shoulder", "summer")
+
+
+def zero_share(x: np.ndarray) -> np.ndarray:
+    """Share of observed hours at exactly 0 kWh (missing hours excluded, not counted as non-zero)."""
+    return nan_share(x == 0, ~np.isnan(x))
 
 
 def seasonal_profiles(mat: np.ndarray, hours: pd.DataFrame) -> pd.DataFrame:
@@ -55,7 +60,7 @@ def peak_features(mat: np.ndarray, hours: pd.DataFrame, peaks: dict) -> pd.DataF
     out["p99_kw"] = p99
     out["p95_kw"] = p95
     out["load_factor"] = mean / np.where(peak > 0, peak, np.nan)
-    out["zero_share"] = np.nanmean(mat == 0, axis=1)
+    out["zero_share"] = zero_share(mat)
     out["base_kw_p05"] = nanquantile_axis1(mat[:, :, None], 0.05)[:, 0]
     for s in SEASONS:
         out[f"mean_kw_{s}"] = np.nanmean(mat[:, season == s], axis=1)
@@ -84,7 +89,7 @@ def peak_features(mat: np.ndarray, hours: pd.DataFrame, peaks: dict) -> pd.DataF
         # persistence: share of top system days on which the customer's max is >= own p95
         top_days = peaks[f"{s}_days"]
         dmax = np.nanmax(days[:, top_days, :], axis=2)
-        out[f"peak_day_persistence_{s}"] = np.nanmean(dmax >= p95[:, None], axis=1)
+        out[f"peak_day_persistence_{s}"] = nan_share(dmax >= p95[:, None], ~np.isnan(dmax))
     return out
 
 
@@ -97,9 +102,9 @@ def pv_features(mat: np.ndarray, hours: pd.DataFrame) -> pd.DataFrame:
     summer = np.isin(month, [4, 5, 6, 7, 8])
     winter = np.isin(month, [12, 1])
     out = pd.DataFrame({
-        "pv_midday_zero_summer": np.nanmean(mat[:, midday & summer] == 0, axis=1),
-        "pv_night_zero_summer": np.nanmean(mat[:, night & summer] == 0, axis=1),
-        "pv_midday_zero_winter": np.nanmean(mat[:, midday & winter] == 0, axis=1),
+        "pv_midday_zero_summer": zero_share(mat[:, midday & summer]),
+        "pv_night_zero_summer": zero_share(mat[:, night & summer]),
+        "pv_midday_zero_winter": zero_share(mat[:, midday & winter]),
     })
     # Midday dip relative to the shoulders of the day (works even when exports are small)
     morning = np.isin(hod, [7, 8])

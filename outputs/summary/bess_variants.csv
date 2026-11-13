@@ -1,6 +1,6 @@
 variant,relief_mw_summer_all,relief_mw_winter_all,relief_mw_summer_tier1,relief_mw_winter_tier1
-"Perfect foresight, 2 units",33.584087,28.848804,5.025072,4.5931454
-"Realistic, 2 units",22.53087,16.718674,3.3710866,2.578672
-"Realistic, 1 unit",15.918419,13.253223,2.1366363,1.7532315
-"Realistic, 2 units, 20% backup reserve",20.45246,15.735475,3.0029187,2.323339
-"Demand flex only (no battery), after rebound",4.9359474,3.648166,1.6382202,1.4521505
+"Perfect foresight, 2 units",33.584087,28.848804,5.0164533,4.582933
+"Realistic, 2 units",22.53087,16.718674,3.3651342,2.57277
+"Realistic, 1 unit",15.918419,13.253223,2.132753,1.7492509
+"Realistic, 2 units, 20% backup reserve",20.45246,15.735475,2.9975963,2.3180463
+"Demand flex only (no battery), after rebound",4.9359474,3.648166,1.633892,1.4492695

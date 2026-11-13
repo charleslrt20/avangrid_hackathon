@@ -1,0 +1,8 @@
+,value
+k,6.0
+silhouette,0.1330185327576462
+davies_bouldin,1.8557403974039357
+bootstrap_ari_mean,0.9051649198679023
+bootstrap_ari_min,0.34273769541744437
+interleaved_ari,0.690363861488505
+interleaved_agreement,0.8655348247708315

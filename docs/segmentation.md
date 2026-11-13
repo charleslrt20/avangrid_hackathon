@@ -8,16 +8,16 @@ Each customer gets the first segment whose rule fires (priority order below). Pe
 
 | segment                          |   customers |   median_annual_kwh |   mean_cp_kw_summer |   mean_cp_kw_winter |   median_load_factor |   also_summer_peak |   also_winter_peak |    share |
 |:---------------------------------|------------:|--------------------:|--------------------:|--------------------:|---------------------:|-------------------:|-------------------:|---------:|
-| Very high load / non-residential |          28 |            3.62e+04 |               9.2   |               9.35  |               0.144  |             0.643  |              0.857 | 0.000825 |
-| Solar PV                         |         384 |            8.01e+03 |               1.13  |               2.31  |               0.124  |             0.0182 |              0.302 | 0.0113   |
-| Electrified: EV + electric heat  |         927 |            1.99e+04 |               3.27  |               5.04  |               0.193  |             0.424  |              0.901 | 0.0273   |
-| EV home                          |        1563 |            1.22e+04 |               3.48  |               1.94  |               0.156  |             0.518  |              0.235 | 0.0461   |
-| Electric-heat home               |        5477 |            1.18e+04 |               1.94  |               3.2   |               0.189  |             0.159  |              0.59  | 0.161    |
-| Low use / seasonal               |        1883 |            1.49e+03 |               0.349 |               0.238 |               0.0853 |             0      |              0     | 0.0555   |
-| Winter peak contributor          |         514 |            1.49e+04 |               3.47  |               3.02  |               0.204  |             0.533  |              1     | 0.0152   |
-| Summer peak contributor          |        2710 |            1.02e+04 |               3.92  |               1.45  |               0.168  |             1      |              0     | 0.0799   |
-| Emerging load                    |         202 |            7.34e+03 |               2.1   |               1.07  |               0.154  |             0      |              0     | 0.00595  |
-| Typical                          |       20239 |            5.4e+03  |               1.59  |               0.951 |               0.137  |             0      |              0     | 0.597    |
+| Very high load / non-residential |          28 |            3.62e+04 |                9.2  |               9.35  |               0.144  |             0.643  |              0.857 | 0.000825 |
+| Solar PV                         |         384 |            8.01e+03 |                1.13 |               2.31  |               0.124  |             0.0182 |              0.302 | 0.0113   |
+| Electrified: EV + electric heat  |         927 |            1.99e+04 |                3.27 |               5.04  |               0.193  |             0.424  |              0.901 | 0.0273   |
+| EV home                          |        1563 |            1.22e+04 |                3.48 |               1.94  |               0.156  |             0.518  |              0.235 | 0.0461   |
+| Electric-heat home               |        5477 |            1.18e+04 |                1.94 |               3.2   |               0.189  |             0.159  |              0.59  | 0.161    |
+| Low use / seasonal               |        1885 |            1.49e+03 |                0.35 |               0.238 |               0.0853 |             0      |              0     | 0.0556   |
+| Winter peak contributor          |         514 |            1.49e+04 |                3.47 |               3.02  |               0.204  |             0.533  |              1     | 0.0152   |
+| Summer peak contributor          |        2710 |            1.02e+04 |                3.92 |               1.45  |               0.168  |             1      |              0     | 0.0799   |
+| Emerging load                    |         202 |            7.34e+03 |                2.1  |               1.07  |               0.154  |             0      |              0     | 0.00595  |
+| Typical                          |       20237 |            5.4e+03  |                1.59 |               0.951 |               0.137  |             0      |              0     | 0.596    |
 
 Segments differ on key features (Kruskal-Wallis; ε² effect size, >0.14 = large):
 
@@ -27,7 +27,7 @@ Segments differ on key features (Kruskal-Wallis; ε² effect size, >0.14 = large
 | cp_kw_summer  |    1.31e+04 |         0 |        0.387 |
 | cp_kw_winter  |    1.97e+04 |         0 |        0.58  |
 | evening_share |    4.09e+03 |         0 |        0.12  |
-| load_factor   |    5.59e+03 |         0 |        0.165 |
+| load_factor   |    5.6e+03  |         0 |        0.165 |
 
 ## Shape archetypes (K-Means on 72-dim seasonal profiles)
 
@@ -55,19 +55,19 @@ Archetypes were reviewed *before* mapping them to appliance names: for each, the
 |           0 | balanced, late-evening peak, flat                              |        8586 | EV label               |   1.37 | not explained by a detected appliance (lift < 1.5) |
 |           1 | balanced, early-evening peak, daytime summer use               |        6827 | HP label               |   1.03 | not explained by a detected appliance (lift < 1.5) |
 |           2 | winter-leaning, early-evening peak                             |        6083 | PV signature           |   2.53 | yes                                                |
-|           3 | summer-leaning, early-evening peak, peaky, daytime summer use  |        5898 | pool                   |   2.8  | yes                                                |
-|           4 | strongly summer-peaking, early-evening peak, peaky             |        3571 | pool                   |   1.9  | yes                                                |
+|           3 | summer-leaning, early-evening peak, peaky, daytime summer use  |        5898 | pool                   |   2.74 | yes                                                |
+|           4 | strongly summer-peaking, early-evening peak, peaky             |        3571 | pool                   |   1.93 | yes                                                |
 |           5 | strongly winter-peaking, winter morning + evening peaks, peaky |        2962 | electric heat          |   4.5  | yes                                                |
 
 Full lift table (archetype rate / population rate):
 
 |   archetype |   EV label |   HP label |   PV list |   EV signature |   electric heat |   central AC |   PV signature |   pool |
 |------------:|-----------:|-----------:|----------:|---------------:|----------------:|-------------:|---------------:|-------:|
-|           0 |       1.37 |       0.77 |      0.99 |           0.95 |            0.24 |         0.91 |           0.92 |   0.72 |
-|           1 |       0.86 |       1.03 |      0.25 |           0.87 |            0.51 |         0.83 |           0.23 |   0.38 |
+|           0 |       1.37 |       0.77 |      0.99 |           0.95 |            0.24 |         0.91 |           0.92 |   0.75 |
+|           1 |       0.86 |       1.03 |      0.25 |           0.87 |            0.51 |         0.83 |           0.23 |   0.39 |
 |           2 |       1.18 |       1.41 |      2.41 |           1.03 |            2.37 |         0.75 |           2.53 |   0.25 |
-|           3 |       0.78 |       0.4  |      0.16 |           0.68 |            0.1  |         1.56 |           0.01 |   2.8  |
-|           4 |       0.77 |       0.22 |      0.36 |           1.67 |            0.01 |         1.49 |           0.24 |   1.9  |
+|           3 |       0.78 |       0.4  |      0.16 |           0.68 |            0.1  |         1.56 |           0.01 |   2.74 |
+|           4 |       0.77 |       0.22 |      0.36 |           1.67 |            0.01 |         1.49 |           0.24 |   1.93 |
 |           5 |       0.62 |       2.9  |      2.31 |           1.19 |            4.5  |         0.46 |           2.75 |   0.1  |
 
 Business segment x archetype (customers):
@@ -79,11 +79,11 @@ Business segment x archetype (customers):
 | Electrified: EV + electric heat  |  109 |  157 |  389 |   23 |    3 |  246 |
 | EV home                          |  496 |  286 |   52 |  283 |  445 |    1 |
 | Electric-heat home               |  283 |  510 | 2342 |   93 |    4 | 2245 |
-| Low use / seasonal               |  562 |  260 |  440 |  141 |  312 |  168 |
+| Low use / seasonal               |  563 |  260 |  440 |  142 |  312 |  168 |
 | Winter peak contributor          |  186 |  193 |   62 |   66 |    5 |    2 |
 | Summer peak contributor          |  497 |  170 |   10 | 1398 |  635 |    0 |
 | Emerging load                    |   72 |   15 |   18 |   16 |   81 |    0 |
-| Typical                          | 6288 | 5214 | 2591 | 3876 | 2073 |  197 |
+| Typical                          | 6287 | 5214 | 2591 | 3875 | 2073 |  197 |
 
 ## Anomalies
 
@@ -91,13 +91,13 @@ IsolationForest on 10 size/shape/weather features flags 340 customers (1%). Thei
 
 | segment                          |   anomalies |
 |:---------------------------------|------------:|
-| Low use / seasonal               |         133 |
-| Electric-heat home               |          72 |
-| Solar PV                         |          55 |
-| Electrified: EV + electric heat  |          30 |
-| Typical                          |          15 |
+| Low use / seasonal               |         139 |
+| Electric-heat home               |          71 |
+| Solar PV                         |          51 |
+| Electrified: EV + electric heat  |          29 |
+| Very high load / non-residential |          15 |
+| Typical                          |          14 |
 | EV home                          |          14 |
-| Very high load / non-residential |          14 |
 | Summer peak contributor          |           5 |
 | Winter peak contributor          |           1 |
 | Emerging load                    |           1 |

@@ -121,6 +121,7 @@ def main() -> None:
     emit("Segments differ on key features (Kruskal-Wallis; ε² effect size, >0.14 = large):")
     emit()
     md(pd.DataFrame(kw))
+    pd.DataFrame(kw).to_csv(C.OUTPUTS_SUMMARY / "segment_kruskal.csv", index=False)
 
     emit("## Shape archetypes (K-Means on 72-dim seasonal profiles)")
     emit()
@@ -135,6 +136,11 @@ def main() -> None:
     emit(f"- Interleaved odd vs even weeks (same centroids, profiles rebuilt from each half): ARI **{ari_half:.3f}**, "
          f"same archetype for **{agree_half:.1%}** of customers.")
     emit()
+    ks = ksel.set_index("k")
+    pd.Series({"k": K_DEFAULT, "silhouette": ks.loc[K_DEFAULT, "silhouette"],
+               "davies_bouldin": ks.loc[K_DEFAULT, "davies_bouldin"], "bootstrap_ari_mean": ari.mean(),
+               "bootstrap_ari_min": ari.min(), "interleaved_ari": ari_half, "interleaved_agreement": agree_half},
+              name="value").to_csv(C.OUTPUTS_SUMMARY / "segmentation_metrics.csv")
     # enrichment of known appliances per archetype (the 'not prescriptive' review)
     tags = pd.DataFrame({"archetype": arch, "EV label": f.label_ev, "HP label": f.label_hp, "PV list": f.label_pv,
                          "EV signature": k.ev_physics, "electric heat": k.electric_heat, "central AC": k.ac_type == "central",

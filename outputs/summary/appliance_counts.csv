@@ -8,6 +8,6 @@ Central AC,13404,high,median 2.4 kW at 90 °F,0.39508356176496595
 Room / partial AC,13727,medium,,0.40460400271170455
 Solar PV,388,high,zeros that follow the sun,0.011436319155834585
 PV + battery,5,medium,lower bound,0.00014737524685353847
-Pool pump,220,medium,timer signature,0.006484510861555693
-Electric water heater,1733,low,hourly data blurs bursts,0.05108026055943644
-Hot tub,1061,low,hourly data blurs cycling,0.031273027382320864
+Pool pump,227,medium,timer signature,0.006690836207150647
+Electric water heater,1753,low,hourly data blurs bursts,0.051669761546850594
+Hot tub,1077,low,hourly data blurs cycling,0.03174462817225219

@@ -28,6 +28,16 @@ def own_baseline(days: np.ndarray, day_month: np.ndarray, q: float = C.BASELINE_
     return base
 
 
+def nan_share(cond: np.ndarray, valid: np.ndarray, axis: int = 1) -> np.ndarray:
+    """Share of the `valid` entries where `cond` holds (NaN if none are valid).
+
+    A plain np.nanmean(x >= t) is wrong on data with gaps: NaN comparisons evaluate to False, so missing
+    readings count as 'no event' and dilute the share for customers with missing days (and halve it on the
+    interleaved-week validation halves)."""
+    cnt = valid.sum(axis=axis)
+    return np.where(cnt > 0, (cond & valid).sum(axis=axis) / np.maximum(cnt, 1), np.nan)
+
+
 def nanquantile_axis1(a: np.ndarray, q: float) -> np.ndarray:
     """Fast nan-aware quantile along axis 1 (lower-index method). np.nanpercentile is ~50x slower."""
     s = np.sort(a, axis=1)                                   # NaNs sort to the end
@@ -122,15 +132,18 @@ def pool(days: np.ndarray, wx: pd.DataFrame) -> pd.DataFrame:
 
     def frac(sel: np.ndarray, sign: int) -> np.ndarray:
         dd = np.diff(days[:, sel, :], axis=2) * sign            # [n, d, 23]
-        return np.nanmean(dd >= 0.7, axis=1)                     # [n, 23]
+        return nan_share(dd >= 0.7, ~np.isnan(dd), axis=1)       # [n, 23]
 
     on_s, off_s = frac(season, 1), frac(season, -1)
     on_w, off_w = frac(winter, 1), frac(winter, -1)
-    on = np.nanmax(on_s - on_w, axis=1)
-    off = np.nanmax(off_s - off_w, axis=1)
-    on_h = np.nanargmax(on_s - on_w, axis=1)
-    off_h = np.nanargmax(off_s - off_w, axis=1)
-    run_h = (off_h - on_h) % 23
+    # A customer with no pool-season or no winter days cannot show "on in summer, absent in winter": NaN score.
+    d_on, d_off = on_s - on_w, off_s - off_w
+    ok = ~np.isnan(d_on).all(axis=1)
+    on = np.where(ok, np.max(np.nan_to_num(d_on, nan=-np.inf), axis=1), np.nan)
+    off = np.where(ok, np.max(np.nan_to_num(d_off, nan=-np.inf), axis=1), np.nan)
+    on_h = np.argmax(np.nan_to_num(d_on, nan=-np.inf), axis=1)
+    off_h = np.argmax(np.nan_to_num(d_off, nan=-np.inf), axis=1)
+    run_h = np.where(ok, (off_h - on_h) % 23, np.nan)
     summer_base = np.nanpercentile(days[:, np.isin(month, [7, 8])].reshape(days.shape[0], -1), 10, axis=1)
     spring_base = np.nanpercentile(days[:, np.isin(month, [4, 5])].reshape(days.shape[0], -1), 10, axis=1)
     return pd.DataFrame({
@@ -148,7 +161,7 @@ def water_heater_hot_tub(days: np.ndarray, wx: pd.DataFrame) -> pd.DataFrame:
     d = days[:, mild]
     night_min = np.nanmin(d[:, :, 1:5], axis=2)
     morning = np.nanmax(d[:, :, 5:10], axis=2) - night_min
-    wh_freq = np.nanmean(morning >= 1.5, axis=1)
+    wh_freq = nan_share(morning >= 1.5, ~np.isnan(morning))
     nights = d[:, :, 0:6]
     q = np.nanpercentile(nights.reshape(d.shape[0], -1), 20, axis=1)[:, None, None]
     bump = (nights - q) >= 1.2
@@ -156,6 +169,6 @@ def water_heater_hot_tub(days: np.ndarray, wx: pd.DataFrame) -> pd.DataFrame:
     iso = bump.copy()
     iso[:, :, 1:] &= ~bump[:, :, :-1]
     iso[:, :, :-1] &= ~bump[:, :, 1:]
-    tub = np.nanmean(iso.sum(axis=2) >= 1, axis=1)
+    tub = nan_share(iso.sum(axis=2) >= 1, ~np.isnan(nights).all(axis=2))
     return pd.DataFrame({"wh_morning_bump_kwh": np.nanmedian(morning, axis=1), "wh_bump_freq": wh_freq,
                          "hot_tub_cycle_share": tub})

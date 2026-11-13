@@ -1,0 +1,38 @@
+area,check,value,expectation,result,role
+Classification,"EV PU logistic, 5-fold CV AUC",0.774 ± 0.027,> benchmark 0.736,pass,check
+Classification,"HP PU logistic, 5-fold CV AUC",0.761 ± 0.046,> benchmark 0.738,pass,check
+Classification,"EV PU, out-of-customer and out-of-time AUC (odd→even / even→odd)",0.761 / 0.765,"> benchmark, close to full-year CV",pass,check
+Classification,"HP PU, out-of-customer and out-of-time AUC (odd→even / even→odd)",0.752 / 0.748,"> benchmark, close to full-year CV",pass,check
+Classification,"EV: bagged PU LightGBM vs logistic (CV AUC, recall in top 2%)",0.784 vs 0.774; 34% vs 26%,"adopt LightGBM only if it beats logistic on held-out recall (every cut-off, every CV split)",info,model choice → bagged LightGBM
+Classification,"HP: bagged PU LightGBM vs logistic (CV AUC, recall in top 2%)",0.773 vs 0.761; 15% vs 17%,"adopt LightGBM only if it beats logistic on held-out recall (every cut-off, every CV split)",info,model choice → PU logistic
+Classification,EV Elkan-Noto c estimated from data,0.035,≈ 0.25 if SCAR + brief hold,fail,check allowed to fail
+Classification,HP Elkan-Noto c estimated from data,0.011,≈ 0.25 if SCAR + brief hold,fail,check allowed to fail
+Classification,EV physics flag count vs implied 186 / 0.25,"2,582 vs 744",same order of magnitude,fail,check allowed to fail
+Classification,Labeled EV recall by detector: L2 / L1 / no signature,29% / 7% / 64%,reported separately (§5),info,check
+Classification,Labeled HP: any electric heat / HP-shaped response,55% / 25%,"reported (label = ownership, not main heat)",info,check
+Classification,PV rule vs complete PV list: precision / recall,92.0% / 90.2%,≥ 85% / ≥ 85%,pass,check
+Stability,"Physics flags, Cohen's κ odd vs even weeks (high/medium-confidence flags)","min 0.55 (Pool pump), median 0.80",κ ≥ 0.6 (substantial),pass,check
+Stability,"Low-confidence flags (water heater, hot tub), κ odd vs even","0.86, 0.81",stable ≠ correct: still low confidence (RECS check below),info,check
+Stability,"Heat type (5 classes), κ odd vs even",0.78 (agree 92%),κ ≥ 0.6,pass,check
+Stability,"EV class (L2 / L1 / none), κ odd vs even",0.79 (agree 97%),κ ≥ 0.6,pass,check
+Stability,"Business segment, same segment in both halves",89% (κ 0.82),κ ≥ 0.6,pass,check
+Stability,"Shape archetype, interleaved weeks (ARI / same archetype)",0.69 / 87%,ARI ≥ 0.5,pass,check
+Seasonal,Flags fire in the expected season (extra kWh/day by season),9/9 pass,all pass,pass,check
+Clustering,K-Means k = 6 silhouette / Davies-Bouldin,0.133 / 1.86,"reported: continuum, not blobs",info,check
+Clustering,"Bootstrap ARI (20 resamples), mean / min",0.91 / 0.34,mean ≥ 0.8,pass,check
+Clustering,Segments differ on key features (Kruskal-Wallis ε²),"0.12-0.58, all p < 1e-10",p < 0.001; ε² reported,pass,check
+Correlations,Segment heating / cooling slopes vs day-shuffle null (p < 0.01),"heat 7/10, cool 10/10",significant where the segment has electric heat / AC,info,check
+Correlations,"Coincident-peak shares carry bootstrap 95% CIs (max CI width, winter)",0.015,CIs reported; segment ranking robust,info,check
+Plausibility (RECS),Any AC vs RECS NE: uses AC equipment,80.0% vs 84.5% (×0.95),×0.67-1.5,pass,"independent check, not tuned"
+Plausibility (RECS),Central AC vs RECS NE: main AC central (incl. central HP),39.5% vs 27.9% (×1.42),×0.67-1.5,pass,"independent check, not tuned"
+Plausibility (RECS),Central AC vs RECS NE: main AC central or ductless HP,39.5% vs 33.3% (×1.19),×0.67-1.5,pass,"independent check, not tuned"
+Plausibility (RECS),Electric heat (any) vs RECS NE: electricity = main heating fuel,19.4% vs 15.5% (×1.25),×0.67-1.5,pass,"independent check, not tuned"
+Plausibility (RECS),Heat pump (HP / HP+backup) vs RECS NE: HP = main heating equipment,4.6% vs 3.1% (×1.50),×0.67-1.5,fail,"independent check, not tuned"
+Plausibility (RECS),Heat pump (HP / HP+backup) vs RECS NE: HP main + ductless HP secondary,4.6% vs 6.1% (×0.75),×0.67-1.5,pass,"independent check, not tuned"
+Plausibility (RECS),Resistive heat vs RECS NE: electric furnace or baseboard = main,4.0% vs 10.9% (×0.37),×0.67-1.5,fail,"independent check, not tuned"
+Plausibility (RECS),Resistive + electric (type unclear) vs RECS NE: electric furnace or baseboard = main,14.8% vs 10.9% (×1.36),×0.67-1.5,pass,"independent check, not tuned"
+Plausibility (RECS),Water heater (low conf.) vs RECS NE: electric main water heater,5.2% vs 32.7% (×0.16),×0.67-1.5,fail,"independent check, not tuned"
+BESS,Power / SOC / export violations across 22 dispatch runs,0,0,pass,check
+BESS,Max energy-balance error (kWh),1.8e-05,< 0.01,pass,check
+BESS,Customers whose recharge sets a new own peak,0,0,pass,check
+BESS,Realistic vs perfect-foresight relief (summer / winter),67% / 58%,gap reported,info,check

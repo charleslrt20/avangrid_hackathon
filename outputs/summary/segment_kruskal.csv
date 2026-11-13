@@ -1,0 +1,6 @@
+feature,kruskal_H,p_value,epsilon_sq
+annual_kwh,18671.75,0.0,0.55024767
+cp_kw_summer,13126.023,0.0,0.3867389
+cp_kw_winter,19683.078,0.0,0.58006537
+evening_share,4087.25,0.0,0.12024206
+load_factor,5595.383,0.0,0.16470745

@@ -1,0 +1,10 @@
+detected,share_detected,share_recs_ne,recs_definition,ratio,consistent
+Any AC,0.7996875644766706,0.8452380952380952,uses AC equipment,0.9461092312118355,True
+Central AC,0.39508356176496595,0.2789115646258503,main AC central (incl. central HP),1.4165191116939024,True
+Central AC,0.39508356176496595,0.3333333333333333,main AC central or ductless HP,1.1852506852948979,True
+Electric heat (any),0.19406372505673947,0.15476190476190477,electricity = main heating fuel,1.2539502234435473,True
+Heat pump (HP / HP+backup),0.045981077018304006,0.030612244897959183,HP = main heating equipment,1.5020485159312642,False
+Heat pump (HP / HP+backup),0.045981077018304006,0.061224489795918366,HP main + ductless HP secondary,0.7510242579656321,True
+Resistive heat,0.03996816694667964,0.108843537414966,electric furnace or baseboard = main,0.3672075338226191,False
+Resistive + electric (type unclear),0.14808264803843546,0.108843537414966,electric furnace or baseboard = main,1.3605093288531256,True
+Water heater (low conf.),0.051669761546850594,0.32653061224489793,electric main water heater,0.15823864473722996,False
