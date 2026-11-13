@@ -10,6 +10,9 @@ const F = JSON.parse(fs.readFileSync(path.join(__dirname, "facts.json"), "utf8")
 const TEAM = fs.existsSync(path.join(__dirname, "team.json"))
   ? JSON.parse(fs.readFileSync(path.join(__dirname, "team.json"), "utf8"))
   : { number: "", name: "", members: [], repo: "" };
+// deck/team.json "speaker_notes": true (default) = notes on every slide; "appendix" = appendix slides only (the
+// submitted version); false = no notes
+const NOTES = TEAM.speaker_notes === undefined ? true : TEAM.speaker_notes;
 const OUT = path.join(__dirname, TEAM.number && TEAM.name
   ? `${TEAM.number}_${TEAM.name}_Final Submission.pptx` : "Final Submission.pptx");
 
@@ -93,7 +96,7 @@ function content(kicker, title, subtitle, notes) {
   s.addText(kicker.toUpperCase(), { placeholder: "kicker" });
   s.addText(title, { placeholder: "title" });
   if (subtitle) s.addText(subtitle, { placeholder: "subtitle" });
-  if (notes) s.addNotes(notes);
+  if (notes && (NOTES === true || (NOTES === "appendix" && kicker === "Appendix"))) s.addNotes(notes);
   return s;
 }
 // place a PNG inside a box without distortion; align: "c" centre, "l" left/top
@@ -177,7 +180,7 @@ section("Introduction");
   if (team) s.addText(team + (TEAM.members && TEAM.members.length ? "  |  " + TEAM.members.join(", ") : ""),
                       { x: 0.75, y: 5.0, w: 8.6, h: 0.4, fontFace: BODY, bold: true, fontSize: 16, color: K.text, margin: 0, isTextBox: true });
   s.addImage({ path: asset("avangrid_logo.png"), altText: "Avangrid logo", x: 0.75, y: 6.15, w: 3.6, h: 3.6 * 220 / 1340 });
-  s.addNotes("Title. One year of hourly smart-meter data for 34k homes, turned into appliance inventories, segments and a battery program.");
+  if (NOTES === true) s.addNotes("Title. One year of hourly smart-meter data for 34k homes, turned into appliance inventories, segments and a battery program.");
 }
 
 // 2 Executive summary ---------------------------------------------

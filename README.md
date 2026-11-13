@@ -227,7 +227,8 @@ bash deck/build.sh --render   # also renders slide PNGs (macOS + Microsoft Power
 
 Every number on the slides comes from `deck/facts.json`, which is built from the pipeline outputs. The build ends with
 a number audit that checks every slide, speaker note and README finding against the facts. It fails if anything
-doesn't match (see [docs/number_audit.md](docs/number_audit.md)). `deck/team.json` sets the team name and file name.
+doesn't match (see [docs/number_audit.md](docs/number_audit.md)). `deck/team.json` sets the team name, the file name and which slides get speaker notes (the submitted
+deck has notes on the appendix slides only).
 Optionally, setting `PPTX_SKILL` to a folder containing `scripts/apply_theme.js` also writes the brand colours into
 the theme.
 
