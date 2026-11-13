@@ -1,0 +1,338 @@
+[
+  {
+    "segment": "Very high load / non-residential",
+    "headline": "A handful of accounts that behave like small businesses.",
+    "who": "28 accounts reviewed one by one in task 1.0b and kept as plausible; median 36,241 kWh/yr. 54% are also flagged as statistical anomalies.",
+    "why": "9.4 kW each at the winter peak (6.1x their customer share) and 9.2 kW in summer.",
+    "program": "Rate-class and account review before any residential offer; 81% would need 2 units plus DR even for their own peak, so they belong in a commercial storage or C&I DR program.",
+    "watch": "Too few to move the system (0.5% of the winter peak); value is per-feeder, not system-wide.",
+    "metrics": {
+      "customers": 28,
+      "share_customers": 0.0008,
+      "share_summer_cp": 0.0039,
+      "share_summer_cp_ci": [
+        0.0021,
+        0.0063
+      ],
+      "share_winter_cp": 0.0051,
+      "share_winter_cp_ci": [
+        0.0032,
+        0.0075
+      ],
+      "bess_candidates": 27,
+      "tier1": 6,
+      "tier2": 16,
+      "battery_relief_kw_summer": 1.508,
+      "battery_relief_kw_winter": 1.392,
+      "dr_relief_kw_summer": 1.97,
+      "dr_relief_kw_winter": 1.802,
+      "avoided_usd_per_home_yr": {
+        "low": 158,
+        "mid": 356,
+        "high": 609
+      }
+    }
+  },
+  {
+    "segment": "Solar PV",
+    "headline": "PV homes still peak in winter evenings: 1.5x their share of the winter peak.",
+    "who": "384 homes whose midday readings drop to zero in sunny months (353 on the utility's PV list). 41% also heat with electricity and 18% charge an EV.",
+    "why": "Solar cuts their summer-peak load to 1.1 kW (0.6x share) but the winter peak falls after dark: 2.3 kW per home.",
+    "program": "PV + storage retrofit aimed at winter evenings: battery relief is higher in winter (0.88 kW) than summer (0.59 kW). 88 are in Tier 1+2.",
+    "watch": "Meters are delivered-only, so we see net import, not generation or true load; storage self-consumption estimates are a lower bound (office-hours Q2).",
+    "metrics": {
+      "customers": 384,
+      "share_customers": 0.0113,
+      "share_summer_cp": 0.0066,
+      "share_summer_cp_ci": [
+        0.0059,
+        0.0074
+      ],
+      "share_winter_cp": 0.0171,
+      "share_winter_cp_ci": [
+        0.0149,
+        0.0195
+      ],
+      "bess_candidates": 236,
+      "tier1": 32,
+      "tier2": 56,
+      "battery_relief_kw_summer": 0.595,
+      "battery_relief_kw_winter": 0.876,
+      "dr_relief_kw_summer": 0.199,
+      "dr_relief_kw_winter": 0.483,
+      "avoided_usd_per_home_yr": {
+        "low": 78,
+        "mid": 180,
+        "high": 311
+      }
+    }
+  },
+  {
+    "segment": "Electrified: EV + electric heat",
+    "headline": "The flagship battery segment: 3% of homes, 9% of the winter peak.",
+    "who": "927 homes with both a home EV charger (86% L2) and electric space heat (25% heat pump, 33% resistive, the rest type unclear). Median use 19,919 kWh/yr.",
+    "why": "Each home adds 5.0 kW to the winter system peak and 3.3 kW to the summer one: 3.3x its share of customers in winter. 90% are also in the top 15% of winter peak contributors.",
+    "program": "Battery + managed charging bundle. 464 of these homes are Tier 1 (50% of the segment), giving 1.19 kW of realistic winter relief per home; managed EV charging and thermostat DR add 1.62 kW in winter, more than the battery alone. Avoided buildout ≈ $312/home/yr at mid placeholder values.",
+    "watch": "49% need 2 units plus DR to hold their own peak through the full event window: a battery alone does not cover a long winter evening here.",
+    "metrics": {
+      "customers": 927,
+      "share_customers": 0.0273,
+      "share_summer_cp": 0.0461,
+      "share_summer_cp_ci": [
+        0.0432,
+        0.0496
+      ],
+      "share_winter_cp": 0.0901,
+      "share_winter_cp_ci": [
+        0.0847,
+        0.0963
+      ],
+      "bess_candidates": 925,
+      "tier1": 464,
+      "tier2": 304,
+      "battery_relief_kw_summer": 1.313,
+      "battery_relief_kw_winter": 1.187,
+      "dr_relief_kw_summer": 1.171,
+      "dr_relief_kw_winter": 1.624,
+      "avoided_usd_per_home_yr": {
+        "low": 138,
+        "mid": 312,
+        "high": 536
+      }
+    }
+  },
+  {
+    "segment": "EV home",
+    "headline": "Summer-peaking EV homes: managed charging first, batteries second.",
+    "who": "1,563 homes with a home-charging signature (66% L2, 34% L1) and no electric heat; 73% have central AC. 42 carry an EV label.",
+    "why": "3.5 kW per home at the summer peak, 1.8x their customer share; 52% are also top-15% summer peak contributors.",
+    "program": "Managed charging / EV TOU: moving charging out of the peak window gives 1.32 kW per home in summer, as much as a battery's 1.20 kW (2 units), at a fraction of the cost. Offer batteries to the 515 Tier 1 homes, where both stack.",
+    "watch": "L2 charging blocks are short and irregular, so relief depends on enrolment rules (charging windows), not on forecasting. Only part of the labeled EVs show home charging at all.",
+    "metrics": {
+      "customers": 1563,
+      "share_customers": 0.0461,
+      "share_summer_cp": 0.0829,
+      "share_summer_cp_ci": [
+        0.0788,
+        0.0869
+      ],
+      "share_winter_cp": 0.0587,
+      "share_winter_cp_ci": [
+        0.0556,
+        0.0619
+      ],
+      "bess_candidates": 1486,
+      "tier1": 515,
+      "tier2": 559,
+      "battery_relief_kw_summer": 1.202,
+      "battery_relief_kw_winter": 0.986,
+      "dr_relief_kw_summer": 1.323,
+      "dr_relief_kw_winter": 0.607,
+      "avoided_usd_per_home_yr": {
+        "low": 123,
+        "mid": 277,
+        "high": 475
+      }
+    }
+  },
+  {
+    "segment": "Electric-heat home",
+    "headline": "The winter peak today: 16% of homes carry 34% of it.",
+    "who": "5,477 homes heated with electricity: 24% heat pump, 18% resistive, 58% electric but type unclear at hourly resolution. Median use 11,760 kWh/yr.",
+    "why": "They add 3.2 kW per home to the winter peak vs 1.9 kW in summer. The NMF fingerprint confirms it: a winter daytime heating part (winter 07-16h) is 33% of their energy, 14 points above the average home.",
+    "program": "Largest Tier 1 pool in absolute numbers (1,245 homes; 2,717 in Tier 1+2, 2.5 MW winter relief). Pair batteries with heat-pump conversion of resistive homes and weatherisation: thermostat DR alone gives only 0.21 kW per home net of rebound.",
+    "watch": "Their share of the winter peak falls to 22% in a 30% heat-pump future, not because they shrink but because new heat-pump load elsewhere grows faster.",
+    "metrics": {
+      "customers": 5477,
+      "share_customers": 0.1614,
+      "share_summer_cp": 0.1617,
+      "share_summer_cp_ci": [
+        0.1571,
+        0.1662
+      ],
+      "share_winter_cp": 0.3384,
+      "share_winter_cp_ci": [
+        0.3308,
+        0.3457
+      ],
+      "bess_candidates": 5227,
+      "tier1": 1245,
+      "tier2": 1472,
+      "battery_relief_kw_summer": 0.933,
+      "battery_relief_kw_winter": 0.768,
+      "dr_relief_kw_summer": 0.056,
+      "dr_relief_kw_winter": 0.207,
+      "avoided_usd_per_home_yr": {
+        "low": 96,
+        "mid": 218,
+        "high": 376
+      }
+    }
+  },
+  {
+    "segment": "Low use / seasonal",
+    "headline": "Vacation homes and very small loads: no program.",
+    "who": "1,885 homes using under the low-use threshold or with long zero-load stretches; median 1,489 kWh/yr.",
+    "why": "6% of homes but 1.0% of the summer and 0.9% of the winter peak.",
+    "program": "Excluded from battery and DR screening. Useful only to the vacancy and meter-health teams.",
+    "watch": "Some may be stuck or misread meters that passed the task 1.0b checks.",
+    "metrics": {
+      "customers": 1885,
+      "share_customers": 0.0556,
+      "share_summer_cp": 0.01,
+      "share_summer_cp_ci": [
+        0.0094,
+        0.0107
+      ],
+      "share_winter_cp": 0.0087,
+      "share_winter_cp_ci": [
+        0.0082,
+        0.0092
+      ],
+      "bess_candidates": 0,
+      "tier1": 0,
+      "tier2": 0,
+      "battery_relief_kw_summer": null,
+      "battery_relief_kw_winter": null,
+      "dr_relief_kw_summer": null,
+      "dr_relief_kw_winter": null,
+      "avoided_usd_per_home_yr": null
+    }
+  },
+  {
+    "segment": "Winter peak contributor",
+    "headline": "High winter load with no electric heat detected: big homes, not heat pumps.",
+    "who": "514 homes in the top 15% at the winter peak without a detected EV or electric-heat signature; 53% are also top summer contributors. Median 14,877 kWh/yr.",
+    "why": "3.0 kW at the winter peak and 3.5 kW at the summer peak: large, evenly loaded homes whose evening load lines up with both system peaks.",
+    "program": "Year-round battery value: 1.25 kW winter and 1.23 kW summer relief per home, 333 in Tier 2. Thermostat DR does nothing here in winter (no electric heat), so the battery is the only lever. Good heat-pump-ready audits: they likely heat with fuel.",
+    "watch": "Why their winter load is high (fuel-fired air handlers, home office, unknown) is not resolved by hourly data.",
+    "metrics": {
+      "customers": 514,
+      "share_customers": 0.0152,
+      "share_summer_cp": 0.0272,
+      "share_summer_cp_ci": [
+        0.0247,
+        0.0296
+      ],
+      "share_winter_cp": 0.03,
+      "share_winter_cp_ci": [
+        0.0274,
+        0.0324
+      ],
+      "bess_candidates": 514,
+      "tier1": 1,
+      "tier2": 333,
+      "battery_relief_kw_summer": 1.23,
+      "battery_relief_kw_winter": 1.252,
+      "dr_relief_kw_summer": 0.123,
+      "dr_relief_kw_winter": 0.0,
+      "avoided_usd_per_home_yr": {
+        "low": 133,
+        "mid": 301,
+        "high": 516
+      }
+    }
+  },
+  {
+    "segment": "Summer peak contributor",
+    "headline": "Air-conditioning load: 8% of homes, 16% of the summer peak.",
+    "who": "2,710 homes in the top 15% at the summer peak with no EV or electric heat; 98% have central AC.",
+    "why": "3.9 kW per home at the summer peak (2.0x their customer share) but only 1.4 kW in winter: they matter today, less in a winter-peaking future (9% of the winter peak at 30% heat pumps).",
+    "program": "Batteries outperform AC cycling here: 1.22 kW vs 0.24 kW per home after the post-event rebound. 763 are Tier 2 (no Tier 1: none are electrified). Run AC thermostat DR as the low-cost mass offer and target batteries where a feeder is summer-constrained.",
+    "watch": "45% need 2 units plus DR for a full heat-wave evening; pre-cooling rebound must be staggered or it sets a new evening peak.",
+    "metrics": {
+      "customers": 2710,
+      "share_customers": 0.0799,
+      "share_summer_cp": 0.1624,
+      "share_summer_cp_ci": [
+        0.1568,
+        0.1679
+      ],
+      "share_winter_cp": 0.0759,
+      "share_winter_cp_ci": [
+        0.0729,
+        0.0792
+      ],
+      "bess_candidates": 2710,
+      "tier1": 0,
+      "tier2": 763,
+      "battery_relief_kw_summer": 1.216,
+      "battery_relief_kw_winter": 0.811,
+      "dr_relief_kw_summer": 0.235,
+      "dr_relief_kw_winter": 0.0,
+      "avoided_usd_per_home_yr": {
+        "low": 118,
+        "mid": 267,
+        "high": 459
+      }
+    }
+  },
+  {
+    "segment": "Emerging load",
+    "headline": "Load growing month over month: tomorrow's EV and heat-pump homes.",
+    "who": "202 homes whose weather-normalised load rose steadily through the year without a detected EV or electric-heat signature yet.",
+    "why": "Small today (0.6% of the summer peak) but their NMF mix has 10 points more year-round daytime load (year-round 07-15h) than the average home: new occupancy or new equipment.",
+    "program": "Watch-list, not battery program: none are Tier 1. Flag their transformers for a load check, offer EV / heat-pump readiness outreach (the 3 kVA rule) and re-screen in six months.",
+    "watch": "A trend over one year can also be a change of occupants; confirm before acting on any single home.",
+    "metrics": {
+      "customers": 202,
+      "share_customers": 0.006,
+      "share_summer_cp": 0.0065,
+      "share_summer_cp_ci": [
+        0.0056,
+        0.0074
+      ],
+      "share_winter_cp": 0.0041,
+      "share_winter_cp_ci": [
+        0.0035,
+        0.0048
+      ],
+      "bess_candidates": 169,
+      "tier1": 0,
+      "tier2": 11,
+      "battery_relief_kw_summer": 0.896,
+      "battery_relief_kw_winter": 0.597,
+      "dr_relief_kw_summer": 0.111,
+      "dr_relief_kw_winter": 0.0,
+      "avoided_usd_per_home_yr": {
+        "low": 87,
+        "mid": 198,
+        "high": 340
+      }
+    }
+  },
+  {
+    "segment": "Typical",
+    "headline": "The silent majority: 60% of homes, and where the future winter peak lands.",
+    "who": "20,237 homes with no EV, electric heat, PV or top-15% peak load; 31% have central AC. Median use 5,396 kWh/yr.",
+    "why": "Individually small (1.6 kW summer, 1.0 kW winter) but together 49% of the summer and 37% of the winter peak. Most future heat-pump adopters come from here (79%): at 30% adoption they hold 53% of the winter peak, 39 points of it new heat-pump load.",
+    "program": "Mass-market TOU and behavioural DR now; heat-pump programs should ship with managed controls from day one. Only 1,013 reach Tier 2 for batteries.",
+    "watch": "Battery value per home is below the candidate average ($201 vs $225/home/yr at mid values): batteries here only make sense on a constrained feeder.",
+    "metrics": {
+      "customers": 20237,
+      "share_customers": 0.5965,
+      "share_summer_cp": 0.4925,
+      "share_summer_cp_ci": [
+        0.4868,
+        0.4996
+      ],
+      "share_winter_cp": 0.3719,
+      "share_winter_cp_ci": [
+        0.3662,
+        0.378
+      ],
+      "bess_candidates": 11388,
+      "tier1": 0,
+      "tier2": 1013,
+      "battery_relief_kw_summer": 0.913,
+      "battery_relief_kw_winter": 0.611,
+      "dr_relief_kw_summer": 0.068,
+      "dr_relief_kw_winter": 0.0,
+      "avoided_usd_per_home_yr": {
+        "low": 89,
+        "mid": 201,
+        "high": 347
+      }
+    }
+  }
+]
