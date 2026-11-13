@@ -1,6 +1,6 @@
 # Hackathon data is confidential: never commit raw or customer-level derived data
-Data/
-data_processed/
+/Data
+/data_processed
 *.parquet
 *.npy
 *.zip
@@ -22,7 +22,7 @@ __pycache__/
 .DS_Store
 
 # deck build tooling
-node_modules/
+node_modules
 deck/render/
 deck/_render*.pdf
 
