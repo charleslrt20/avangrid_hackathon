@@ -282,5 +282,4 @@ The data is Avangrid's and is for use in this hackathon only. Raw data, `data_pr
 fitted models are gitignored, and only aggregates are committed. Keep the repo private and never commit anything from
 `Data/`.
 
-Claude (Anthropic) was used at build time to write code and to draft the segment cards, playbook text and deck
-narrative from aggregate tables. No customer-level data was sent to it, and nothing calls an LLM at runtime.
+Claude (Anthropic) was used to help write the code.
