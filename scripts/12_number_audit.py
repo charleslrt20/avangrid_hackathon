@@ -24,7 +24,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DECK = Path(sys.argv[1]) if len(sys.argv) > 1 else next((ROOT / "deck").glob("*Final Submission.pptx"))
+DECK = Path(sys.argv[1]) if len(sys.argv) > 1 else max((ROOT / "deck").glob("*Final Submission.pptx"), key=lambda p: p.stat().st_mtime)
 FACTS = json.loads((ROOT / "deck" / "facts.json").read_text())
 
 TOKEN = re.compile(r"(?<![\w.])[-−]?\$?\d[\d,]*(?:\.\d+)?(?:%|[kKM](?![a-zA-Z]))?")
