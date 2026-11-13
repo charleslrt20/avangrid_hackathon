@@ -1,0 +1,22 @@
+# Hackathon data is confidential: never commit raw or customer-level derived data
+Data/
+data_processed/
+*.parquet
+*.npy
+*.zip
+*.xlsx
+*.csv
+*.pdf
+outputs/*
+!outputs/summary/
+!outputs/summary/*.csv
+models/*
+!models/.gitkeep
+
+# Python / tooling
+__pycache__/
+*.egg-info/
+.venv/
+.ipynb_checkpoints/
+.streamlit/secrets.toml
+.DS_Store
