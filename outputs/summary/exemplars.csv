@@ -1,0 +1,13 @@
+cls,class_size,candidates,picked_from_labeled,confidence,ev_l2_per_week,ev_l2_block_kw,ev_l2_block_hours,class_median_ev_l2_per_week,class_median_ev_l2_block_kw,class_median_ev_l2_block_hours,ev_l1_night_share,night_quiet_kwh,class_median_ev_l1_night_share,class_median_night_quiet_kwh,annual_kwh,peak_kw,class_median_annual_kwh,class_median_peak_kw,heat_slope,heat_break_ratio,class_median_heat_slope,class_median_heat_break_ratio,cool_slope,cool_bp_f,class_median_cool_slope,class_median_cool_bp_f,pool_timer_score,pool_run_hours,class_median_pool_timer_score,class_median_pool_run_hours,pv_midday_zero_summer,pv_zero_season_contrast,class_median_pv_midday_zero_summer,class_median_pv_zero_season_contrast,evening_share,class_median_evening_share,wh_morning_bump_kwh,wh_bump_freq,class_median_wh_morning_bump_kwh,class_median_wh_bump_freq,hot_tub_cycle_share,class_median_hot_tub_cycle_share
+"EV, L2 charging",1902,48,True,,1.883262466177039,7.173500061035156,3.0,2.0943177425589488,7.836250305175781,3.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"EV, L1 charging",680,13,True,,,,,,,,0.30337078651685395,0.29786667227745056,0.30337078651685395,0.42926663160324097,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"EV label, no home-charging signature",118,109,False,,,,,,,,,,,,9134.646484375,6.171000003814697,8481.9052734375,6.076000213623047,,,,,,,,,,,,,,,,,,,,,,,,
+Heat pump,1109,16,True,,,,,,,,,,,,,,,,1.3247244713799526,1.4093627422047006,1.327775636394104,1.4380952031679406,,,,,,,,,,,,,,,,,,,,
+Heat pump + resistance backup,451,434,False,,,,,,,,,,,,,,,,0.7081309552100443,2.546531523130884,0.7369132602427734,2.526151885944053,,,,,,,,,,,,,,,,,,,,
+Resistive heat,1356,1250,False,,,,,,,,,,,,,,,,2.0706369669564957,0.7713264262900216,2.0946733089970424,0.7752927271601946,,,,,,,,,,,,,,,,,,,,
+Central AC,10660,10490,False,,,,,,,,,,,,,,,,,,,,2.1364955225151787,62.5,2.136480066744663,62.5,,,,,,,,,,,,,,,,
+Pool pump,227,211,False,,,,,,,,,,,,,,,,,,,,,,,,0.46464646464646464,9.0,0.46529209621993123,9.0,,,,,,,,,,,,
+Solar PV,388,350,True,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.5254901960784314,0.4190385831752056,0.5215686274509804,0.4237274030882737,,,,,,,,
+Solar PV + battery,5,5,False,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.7869281045751634,,0.7869281045751634,,0.9433836340904236,1.0255874395370483,,,,,,
+Water heater,1753,1700,False,low (hourly data blurs it),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1.9759999513626099,0.6554621848739496,1.9719999432563782,0.6554621848739496,,
+Hot tub,1077,1025,False,low (hourly data blurs it),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.525,0.525
