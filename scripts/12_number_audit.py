@@ -24,7 +24,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DECK = Path(sys.argv[1]) if len(sys.argv) > 1 else max((ROOT / "deck").glob("*Final Submission.pptx"), key=lambda p: p.stat().st_mtime)
+DECK = Path(sys.argv[1]) if len(sys.argv) > 1 else max((p for p in (ROOT / "deck").glob("*Final Submission.pptx") if not p.name.startswith("~$")), key=lambda p: p.stat().st_mtime)
 FACTS = json.loads((ROOT / "deck" / "facts.json").read_text())
 
 TOKEN = re.compile(r"(?<![\w.])[-−]?\$?\d[\d,]*(?:\.\d+)?(?:%|[kKM](?![a-zA-Z]))?")
@@ -177,8 +177,10 @@ def hardcoded_in_builder() -> list[tuple[int, str]]:
 
 def main() -> int:
     deck_rows = audit(pptx_paragraphs(DECK))
-    readme = [("README", p) for p in (ROOT / "README.md").read_text().split("\n\n")
-              if "Main findings" in p or p.lstrip().startswith("- **")]
+    # README: the "Main findings" section quotes results (setup, timings and specs elsewhere are not results)
+    md = (ROOT / "README.md").read_text()
+    sec = re.search(r"^## Main findings\n(.*?)(?=^## )", md, flags=re.S | re.M)
+    readme = [("README", p) for p in (sec.group(1) if sec else "").split("\n") if p.strip()]
     readme_rows = audit(readme)
     lits = hardcoded_in_builder()
 

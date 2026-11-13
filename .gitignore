@@ -25,3 +25,7 @@ __pycache__/
 node_modules/
 deck/render/
 deck/_render*.pdf
+
+# Office lock files and local tool settings
+~$*
+.claude/

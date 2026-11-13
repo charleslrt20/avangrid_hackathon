@@ -18,7 +18,7 @@ fi
 
 run 03b_checks.py
 # Pipeline steps are added here as they land (PLAN.md §3):
-for s in 04_features.py 05_classify.py 06_segment.py 06b_decompose.py 07_drivers.py 08_bess.py 08b_future.py 09a_validate.py 09_insights.py 10_figures.py; do
+for s in 04_features.py 05_classify.py 06_segment.py 06b_decompose.py 07_drivers.py 08_bess.py 08b_future.py 09a_validate.py 09_insights.py 10_figures.py 13_customer_results.py; do
   if [[ -f "scripts/$s" ]]; then run "$s"; else echo "-- skip $s (not built yet)"; fi
 done
 echo "done"

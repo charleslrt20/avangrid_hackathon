@@ -1,0 +1,29 @@
+item,customers,share
+customers (modeling population),33927,1.0
+heat_type: none/non-electric,27343,0.8059
+heat_type: electric (type unclear),3668,0.1081
+heat_type: resistive,1356,0.04
+heat_type: HP,1109,0.0327
+heat_type: HP+backup,451,0.0133
+ac_type: room/partial,13727,0.4046
+ac_type: central,13404,0.3951
+ac_type: none/minimal,6796,0.2003
+ev_class: no home-charging signature,31345,0.9239
+ev_class: L2 detectable,1902,0.0561
+ev_class: L1 detectable,680,0.02
+solar_pv,388,0.0114
+pv_with_battery,5,0.0001
+pool_pump,227,0.0067
+water_heater_lowconf,1753,0.0517
+hot_tub_lowconf,1077,0.0317
+battery_tier_1_2,6790,0.2001
+managed_ev_charging,2582,0.0761
+ac_thermostat_dr,13404,0.3951
+heat_dr,6584,0.1941
+heat_pump_conversion,1356,0.04
+pv_plus_storage,388,0.0114
+battery_candidate,22682,0.6686
+battery_tier: Not prioritised,9102,0.2683
+battery_tier: Tier 1,2263,0.0667
+battery_tier: Tier 2,4527,0.1334
+battery_tier: Tier 3,6790,0.2001
