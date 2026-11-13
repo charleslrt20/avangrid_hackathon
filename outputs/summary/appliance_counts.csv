@@ -1,0 +1,13 @@
+appliance,customers,confidence,note,share
+EV (L2 or L1 home charging),2582,medium-high,"L2 high, L1 medium",0.07610457747516727
+  of which L2,1902,high,median charger 6.3 kW,0.056061543903086035
+Electric space heat (any),6584,high,,0.19406372505673947
+  HP / HP+backup,1560,medium,shape of temperature response,0.045981077018304006
+  resistive,1356,medium,,0.03996816694667964
+Central AC,13404,high,median 2.4 kW at 90 °F,0.39508356176496595
+Room / partial AC,13727,medium,,0.40460400271170455
+Solar PV,388,high,zeros that follow the sun,0.011436319155834585
+PV + battery,5,medium,lower bound,0.00014737524685353847
+Pool pump,220,medium,timer signature,0.006484510861555693
+Electric water heater,1733,low,hourly data blurs bursts,0.05108026055943644
+Hot tub,1061,low,hourly data blurs cycling,0.031273027382320864

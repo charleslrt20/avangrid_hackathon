@@ -1,0 +1,11 @@
+segment,0,1,2,3,4,5
+Very high load / non-residential,3,4,6,1,3,11
+Solar PV,90,18,173,1,10,92
+Electrified: EV + electric heat,109,157,389,23,3,246
+EV home,496,286,52,283,445,1
+Electric-heat home,283,510,2342,93,4,2245
+Low use / seasonal,562,260,440,141,312,168
+Winter peak contributor,186,193,62,66,5,2
+Summer peak contributor,497,170,10,1398,635,0
+Emerging load,72,15,18,16,81,0
+Typical,6288,5214,2591,3876,2073,197

@@ -55,8 +55,10 @@ def _batched_wls(X: np.ndarray, Y: np.ndarray, W: np.ndarray, ridge: float = 1e-
     return beta, sse, fitted
 
 
-def fit_changepoint(daily: np.ndarray, wx: pd.DataFrame) -> tuple[pd.DataFrame, np.ndarray]:
-    """Returns (coefficients per customer, residual matrix [n, 365] with NaN on missing days)."""
+def fit_changepoint(daily: np.ndarray, wx: pd.DataFrame,
+                    fixed_bp: tuple[np.ndarray, np.ndarray] | None = None) -> tuple[pd.DataFrame, np.ndarray]:
+    """Returns (coefficients per customer, residual matrix [n, 365] with NaN on missing days).
+    `fixed_bp` = (heating, cooling) balance points per row skips the grid search (permutation tests)."""
     n = daily.shape[0]
     W = (~np.isnan(daily)).astype(np.float64)
     Y = np.nan_to_num(daily)
@@ -69,7 +71,9 @@ def fit_changepoint(daily: np.ndarray, wx: pd.DataFrame) -> tuple[pd.DataFrame, 
     best_sse = np.full(n, np.inf)
     best_hb = np.zeros(n)
     best_cb = np.zeros(n)
-    for hb in HB_GRID:
+    if fixed_bp is not None:
+        best_hb, best_cb = np.asarray(fixed_bp[0], float), np.asarray(fixed_bp[1], float)
+    for hb in (HB_GRID if fixed_bp is None else []):
         for cb in CB_GRID:
             if cb < hb:
                 continue

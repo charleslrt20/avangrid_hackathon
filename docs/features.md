@@ -1,6 +1,6 @@
 # Feature dictionary (task 1.2)
 
-Built by `scripts/04_features.py` in 46s for 34,238 customers (33,927 in the modeling population). Thresholds come from equipment ratings in `src/avangrid/config.py`, never from labels.
+Built by `scripts/04_features.py` in 53s for 34,238 customers (33,927 in the modeling population). Thresholds come from equipment ratings in `src/avangrid/config.py`, never from labels.
 
 Confidence reflects what hourly data can resolve: fast cycling loads (water heater, hot tub) average into small hourly bumps, so those scores are tagged low.
 
