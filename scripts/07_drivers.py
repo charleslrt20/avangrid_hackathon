@@ -161,16 +161,24 @@ def main() -> None:
     ax.grid(axis="y", visible=False)
     P.save(fig, "peak_share_by_segment")
 
-    fig, ax = plt.subplots(figsize=(9, 5))
+    fig, ax = plt.subplots(figsize=(10, 5))
     mids = [iv.mid for iv in tr.columns]
+    # Highlight the segments the story is about; the rest stay grey so ten lines stay readable.
+    focus = {"Electrified: EV + electric heat": P.PALETTE[2], "Electric-heat home": P.WINTER,
+             "Summer peak contributor": P.SUMMER, "EV home": P.PALETTE[1], "Typical": "#000000"}
+    other_labeled = False
     for i, g in enumerate(tr.index):
         if g in ("Very high load / non-residential",):
             continue
-        ax.plot(mids, tr.loc[g].to_numpy(), lw=2, marker="o", ms=3, label=g, color=P.PALETTE[i % len(P.PALETTE)])
+        hi = g in focus
+        ax.plot(mids, tr.loc[g].to_numpy(), lw=2.4 if hi else 1.0, marker="o" if hi else None, ms=3,
+                color=focus.get(g, P.NEUTRAL), alpha=1 if hi else 0.6, zorder=3 if hi else 1,
+                label=g if hi else (None if other_labeled else "Other segments"))
+        other_labeled |= not hi
     ax.set_xlabel("Outdoor temperature (°F)")
     ax.set_ylabel("Average kW per home")
-    ax.set_title("Temperature response by segment (hourly load vs hourly temperature)")
-    ax.legend(fontsize=8, ncol=2)
+    ax.set_title("Electric heat drives cold-weather load; AC drives hot-weather load")
+    ax.legend(fontsize=9, loc="upper left", bbox_to_anchor=(1.01, 1.0))
     P.save(fig, "temperature_response")
 
     fig, ax = plt.subplots(figsize=(8, 4.5))

@@ -175,4 +175,4 @@ Reading the gaps:
 
 ![Flag stability and RECS plausibility](figures/validation_stability_recs.png)
 
-_Runtime 264s._
+_Runtime 219s._

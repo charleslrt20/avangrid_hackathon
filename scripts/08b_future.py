@@ -543,7 +543,7 @@ def main() -> None:
     ax.set_xlabel("Hour ending")
     ax.set_ylabel("System load (MW)")
     ax.set_title(f"Coldest peak day ({hours.usage_date.iat[wd * 24].date()}, min {temp[cols].min():.0f} °F)")
-    ax.legend(fontsize=8, loc="lower right")
+    ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=3)
     ax = axes[1]
     for lab_, col_, ls_ in (("Summer, today", P.SUMMER, "-"), ("Winter, today", P.WINTER, ":"),
                             (f"Winter, {s_max:.0%} HP", P.WINTER, "-")):

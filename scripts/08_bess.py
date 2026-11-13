@@ -304,7 +304,7 @@ def main() -> None:
         if s == "summer":
             h1, l1 = ax.get_legend_handles_labels()
             h2, l2 = ax2.get_legend_handles_labels()
-            ax.legend(h1 + h2, l1 + l2, loc="upper left", fontsize=8)
+            fig.legend(h1 + h2, l1 + l2, loc="upper center", bbox_to_anchor=(0.5, 0.02), ncol=4, fontsize=9)
     fig.subplots_adjust(wspace=0.35)
     fig.suptitle("Realistic dispatch for a Tier-1 home (2 x IQ 10C): SOC-constrained, multi-day", fontweight="bold")
     P.save(fig, "bess_dispatch_example")

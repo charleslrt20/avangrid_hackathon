@@ -1,4 +1,4 @@
-"""Shared figure style: colour-blind-safe Okabe-Ito palette, consistent fonts, 150 dpi PNGs."""
+"""Shared figure style: colour-blind-safe Okabe-Ito palette, consistent fonts, 200 dpi PNGs."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ NEUTRAL = "#999999"
 
 def style() -> None:
     plt.rcParams.update({
-        "figure.dpi": 150, "savefig.dpi": 150, "font.size": 10, "axes.titlesize": 12,
+        "figure.dpi": 150, "savefig.dpi": 200, "font.size": 10, "axes.titlesize": 12,
         "axes.titleweight": "bold", "axes.spines.top": False, "axes.spines.right": False,
         "axes.grid": True, "grid.alpha": 0.25, "legend.frameon": False,
         "axes.prop_cycle": matplotlib.cycler(color=PALETTE),
