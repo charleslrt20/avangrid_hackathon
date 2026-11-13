@@ -17,6 +17,16 @@ bash scripts/run_all.sh --from-raw   # first time: build data_processed/ from Da
 bash scripts/run_all.sh              # afterwards: rerun the pipeline
 ```
 
+## Demo app
+```bash
+streamlit run app/streamlit_app.py
+```
+Four views on the cached outputs (each loads in well under 3 s): overview with the program playbook, customer
+lookup (load carpet, weather response, "why flagged" evidence, battery dispatch with state of charge, NMF mix),
+segment explorer (insight cards), and battery ranking. Customer IDs are hidden by default (sidebar toggle).
+`python app/screenshots.py` (needs `pip install playwright` and Google Chrome) saves `docs/figures/app_*.png`
+from a running app.
+
 ## Layout
 - `scripts/` numbered pipeline steps (`00`-`09`) and `run_all.sh`
 - `src/avangrid/` package: `config.py` (all constants and assumptions), `io.py` (loaders), models
