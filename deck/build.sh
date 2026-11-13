@@ -9,6 +9,7 @@ export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
 python3 -W ignore scripts/11_deck_facts.py
 NODE_PATH="$PWD/deck/node_modules" node deck/build_deck.js | tee /tmp/deck_build_$$.log
 OUT=$(sed -n 's/^wrote //p' /tmp/deck_build_$$.log | tail -1); rm -f /tmp/deck_build_$$.log
+python3 -W ignore scripts/12_number_audit.py "$OUT"   # every deck number must trace to facts.json (exit 1 otherwise)
 
 if [[ "${1:-}" == "--render" ]]; then
   # PowerPoint is sandboxed: it may write only where it was granted access (the project folder), and

@@ -95,7 +95,9 @@ bash deck/build.sh            # scripts/11_deck_facts.py → deck/facts.json →
 bash deck/build.sh --render   # macOS + Microsoft PowerPoint + pymupdf: also renders slide PNGs for QA
 ```
 
-All deck numbers come from `deck/facts.json`, which `11_deck_facts.py` reads from the pipeline outputs.
+All deck numbers come from `deck/facts.json`, which `11_deck_facts.py` reads from the pipeline outputs. The build
+ends with `scripts/12_number_audit.py`, which checks every number on the slides, in the notes and in the README
+against the facts and writes [docs/number_audit.md](docs/number_audit.md); it fails the build on any unmatched number.
 `deck/figure_list.md` maps each slide to its figures and source tables.
 
 ## Repository layout

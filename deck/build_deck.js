@@ -63,7 +63,7 @@ pres.defineSlideMaster({
   title: "CONTENT",
   background: { color: K.white },
   objects: [
-    { image: { x: W - M - LEAF.w, y: 0.32, w: LEAF.w, h: LEAF.h, path: asset("leaf_mark.png") } },
+    { image: { x: W - M - LEAF.w, y: 0.32, w: LEAF.w, h: LEAF.h, path: asset("leaf_mark.png"), altText: "Leaf mark" } },
     { text: { text: footerText, options: { x: M, y: 7.02, w: 8, h: 0.3, fontFace: BODY, fontSize: 9, color: K.muted, margin: 0 } } },
     { placeholder: { options: { name: "kicker", type: "body", x: M, y: 0.3, w: 10.5, h: 0.3, fontFace: BODY, fontSize: 12,
                                 bold: true, color: K.pill, charSpacing: 1.5, margin: 0, valign: "middle", align: "left" }, text: "" } },
@@ -166,9 +166,9 @@ function table(s, header, rows, x, y, w, colW, opts = {}) {
 section("Introduction");
 {
   const s = pres.addSlide({ masterName: "COVER", sectionTitle: currentSection });
-  s.addImage({ path: asset("tile_plug.png"), x: 0.75, y: 0, w: 1.05, h: 1.05 * 400 / 280 });
-  s.addImage({ path: asset("bulb_head.png"), x: 9.35, y: 0.45, w: 2.4, h: 2.4 * 560 / 500, transparency: 0 });
-  s.addImage({ path: asset("tiles_wind_solar.png"), x: W - 2.55, y: 3.15, w: 2.55, h: 2.55 * 670 / 530 });
+  s.addImage({ path: asset("tile_plug.png"), altText: "Plug icon tile", x: 0.75, y: 0, w: 1.05, h: 1.05 * 400 / 280 });
+  s.addImage({ path: asset("bulb_head.png"), altText: "Light bulb illustration", x: 9.35, y: 0.45, w: 2.4, h: 2.4 * 560 / 500, transparency: 0 });
+  s.addImage({ path: asset("tiles_wind_solar.png"), altText: "Wind and solar tiles", x: W - 2.55, y: 3.15, w: 2.55, h: 2.55 * 670 / 530 });
   s.addText("2026 Energy Innovation Hackathon", { x: 0.75, y: 1.75, w: 9, h: 0.55, fontFace: HEAD, bold: true, fontSize: 24, color: K.blue, margin: 0, isTextBox: true });
   s.addText("From smart-meter data to battery programs", { x: 0.75, y: 2.3, w: 9.4, h: 1.5, fontFace: HEAD, bold: true, fontSize: 44, color: K.green, margin: 0, valign: "top", isTextBox: true });
   s.addText(`Classifying appliances, segmenting ${n0(D.modeled)} homes and sizing behind-the-meter batteries from one year of hourly AMI`,
@@ -176,7 +176,7 @@ section("Introduction");
   const team = [TEAM.number ? `Team ${TEAM.number}` : "", TEAM.name].filter(Boolean).join(" · ");
   if (team) s.addText(team + (TEAM.members && TEAM.members.length ? "  |  " + TEAM.members.join(", ") : ""),
                       { x: 0.75, y: 5.0, w: 8.6, h: 0.4, fontFace: BODY, bold: true, fontSize: 16, color: K.text, margin: 0, isTextBox: true });
-  s.addImage({ path: asset("avangrid_logo.png"), x: 0.75, y: 6.15, w: 3.6, h: 3.6 * 220 / 1340 });
+  s.addImage({ path: asset("avangrid_logo.png"), altText: "Avangrid logo", x: 0.75, y: 6.15, w: 3.6, h: 3.6 * 220 / 1340 });
   s.addNotes("Title. One year of hourly smart-meter data for 34k homes, turned into appliance inventories, segments and a battery program.");
 }
 
@@ -330,7 +330,7 @@ section("Appliances");
 {
   const s = content("Appliance classification", "L2 and L1 charging leave different fingerprints",
     "Two weeks of a typical labeled L2 home and a typical labeled L1 home",
-    "L2: 6-11 kW blocks of 2-5 hours, counted on mild days only so HVAC surges don't trigger it. L1: a flat 1.0-2.2 kWh overnight plateau above the home's own quiet-night level.");
+    "L2: blocks of 1-6 hours peaking at 5.5-12 kW (6-11.5 kW chargers), counted on mild days only so HVAC surges don't trigger it. L1: a flat 1.0-2.2 kWh overnight plateau above the home's own quiet-night level.");
   const f = fig(s, figure("exemplars_ev.png"), M, CT - 0.1, 8.7, CB - CT + 0.1, "l");
   const x0 = f.x + f.w + 0.35, w0 = W - M - x0;
   tile(s, x0, CT - 0.1, w0, 1.45, n0(CL.ev_l2), "L2 detectable: short high blocks ≥ 1 week in 4", K.green, { valueSize: 26, labelSize: 13 });
@@ -432,7 +432,7 @@ section("Batteries & flexibility");
 {
   const s = content("Battery results", `${n0(T1.customers)} Tier 1 homes cut ${n1(T1.battery_relief_mw_summer)} MW summer, ${n1(T1.battery_relief_mw_winter)} MW winter`,
     "Coincident-peak relief by tier (left) and what the kWh limit and realistic dispatch cost for Tier 1 (right)",
-    `Tier 1 is ${pct(T1.share_electrified, 1)} electrified homes. Perfect foresight is the upper bound; one unit and a backup reserve both cost relief; demand flex alone, after rebound, gives about half of a battery.`);
+    `${n0(Math.round(T1.share_electrified * T1.customers))} of the ${n0(T1.customers)} Tier 1 homes are electrified (EV or electric heat). Perfect foresight is the upper bound; one unit and a backup reserve both cost relief; demand flex alone, after rebound, gives about half of a battery.`);
   fig(s, figure("bess_tiers.png"), M, CT - 0.05, 5.6, 3.55, "c");
   fig(s, figure("bess_variants.png"), M + 5.9, CT + 0.2, W - 2 * M - 5.9, 3.1, "c");
   const sz = F.bess_sizing_tier1;
@@ -559,14 +559,14 @@ section("From insight to action");
 // 23 Closing -----------------------------------------------------------------------------
 {
   const s = pres.addSlide({ masterName: "COVER", sectionTitle: currentSection });
-  s.addImage({ path: asset("tiles_wind_solar.png"), x: W - 2.55, y: 2.6, w: 2.55, h: 2.55 * 670 / 530 });
+  s.addImage({ path: asset("tiles_wind_solar.png"), altText: "Wind and solar tiles", x: W - 2.55, y: 2.6, w: 2.55, h: 2.55 * 670 / 530 });
   s.addText("Thank you", { x: 0.75, y: 2.2, w: 8, h: 1.0, fontFace: HEAD, bold: true, fontSize: 48, color: K.green, margin: 0, isTextBox: true });
   s.addText([
     { text: "Electrified homes drive the peak, and the winter peak is coming. ", options: { bold: true, breakLine: true } },
     { text: "Target batteries where value stacks, pair them with managed charging and heat-pump programs, and coordinate the fleet before heat pumps scale." },
   ], { x: 0.75, y: 3.3, w: 8.6, h: 1.4, fontFace: BODY, fontSize: 18, color: K.dkgreen, margin: 0, valign: "top", isTextBox: true });
   if (TEAM.repo) s.addText(TEAM.repo, { x: 0.75, y: 4.85, w: 8.6, h: 0.4, fontFace: BODY, fontSize: 14, color: K.text, margin: 0, isTextBox: true });
-  s.addImage({ path: asset("avangrid_logo.png"), x: 0.75, y: 6.15, w: 3.6, h: 3.6 * 220 / 1340 });
+  s.addImage({ path: asset("avangrid_logo.png"), altText: "Avangrid logo", x: 0.75, y: 6.15, w: 3.6, h: 3.6 * 220 / 1340 });
 }
 
 // Appendix ---------------------------------------------------------------------------------

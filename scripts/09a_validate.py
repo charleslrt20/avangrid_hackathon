@@ -311,7 +311,7 @@ def main() -> None:
     emit("| Threshold | Set from | Checked against |")
     emit("|---|---|---|")
     for t_, s_, c_ in [
-        ("EV L2: ≥ 3 kWh above own baseline, block peak 5.5-12 kW, ≤ 5 h, ≥ 0.5/week", "charger ratings (6-11.5 kW L2)", "labeled EV recall; implied 744; κ odd/even"),
+        ("EV L2: ≥ 3 kWh above own baseline, block peak 5.5-12 kW, 1-6 h, ≥ 0.5/week in ≥ 25% of weeks", "charger ratings (6-11.5 kW L2)", "labeled EV recall; implied 744; κ odd/even"),
         ("EV L1: 1.0-2.2 kWh overnight plateau on ≥ 25% of mild nights", "120 V 12-16 A rating", "labeled EV recall; κ odd/even"),
         ("Electric heat: heat slope ≥ 0.5 kWh/day/°F", "home heat loss ÷ HP COP vs fuel-heat fans", "labeled HP; RECS; seasonal check"),
         ("HP shape: slope ×1.25 below 20 °F (×2 = backup)", "HP COP curve / strip backup", "labeled HP; RECS split"),
