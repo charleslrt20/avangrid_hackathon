@@ -148,6 +148,11 @@ def main() -> None:
         o = plain(o)
         return None if isinstance(o, float) and np.isnan(o) else o
 
+    # ---- review round 2 extras (scripts/10b_deck_extras.py)
+    ex = S / "deck_extras.json"
+    if ex.exists():
+        out["extras"] = json.loads(ex.read_text())
+
     path = C.DECK / "facts.json"
     path.write_text(json.dumps(clean(out), indent=1, allow_nan=False) + "\n")
     print(f"wrote {path} ({path.stat().st_size / 1024:.0f} KB)")

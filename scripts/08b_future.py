@@ -507,13 +507,16 @@ def main() -> None:
 
     # ------------------------------------------------------------------ figures
     fig, ax = plt.subplots(figsize=(8.5, 4.5))
+    # plain names for the deck (the letters stay in docs/future.md)
+    plain = {"A": "partial switch (furnace stays as backup)", "B": "full switch (heat pump replaces furnace)",
+             "C": "our detection (independent check)"}
     for key, ls in (("A", ":"), ("C", "--"), ("B", "-")):
         sw = sweep[sweep.model == key]
         lw = 2.2 if key == HEADLINE else 1.1
         ax.plot(sw.hp_share * 100, sw.winter_peak_kw / 1000, color=P.WINTER, ls=ls, lw=lw,
-                label=f"Winter peak, group {key}" + (" (headline)" if key == HEADLINE else ""))
+                label=f"Winter peak, {plain[key]}")
         ax.plot(sw.hp_share * 100, sw.summer_peak_kw / 1000, color=P.SUMMER, ls=ls, lw=lw,
-                label=f"Summer peak, group {key}" if key == HEADLINE else None)
+                label="Summer peak" if key == HEADLINE else None)
     c_ = cross[HEADLINE]
     ax.axvline(c_ * 100, color="black", lw=1)
     ax.text(c_ * 100 + 0.7, ax.get_ylim()[0] + 0.92 * (ax.get_ylim()[1] - ax.get_ylim()[0]),
@@ -524,7 +527,7 @@ def main() -> None:
     ax.set_xlabel("Homes adding a heat pump (% of customers)")
     ax.set_ylabel("System peak (MW, study population)")
     ax.set_title("Heat-pump adoption turns the system winter-peaking")
-    ax.legend(loc="upper left", fontsize=8)
+    ax.legend(loc="lower right", fontsize=8)
     P.save(fig, "future_peak_crossover")
 
     fig, axes = plt.subplots(1, 2, figsize=(13, 4.2))

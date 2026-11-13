@@ -1,0 +1,176 @@
+{
+ "bill": {
+  "on_peak_rate": 0.32,
+  "off_peak_rate": 0.18,
+  "on_peak_start": 14,
+  "on_peak_end": 19,
+  "tier_1_usd_yr_median": 314.86492919921875,
+  "tier_2_usd_yr_median": 243.5810546875,
+  "all_candidates_usd_yr_median": 178.6820831298828,
+  "tier_1_usd_yr_mean": 323.8938927947553,
+  "tier_2_usd_yr_mean": 255.3724757473227,
+  "all_candidates_usd_yr_mean": 198.00353669813308,
+  "tier1_onpeak_covered_share": 1.0,
+  "tier1_onpeak_kwh_median": 2712.052490234375,
+  "tier1_grid_usd_yr_mid": 334.942626953125,
+  "tier1_total_usd_yr_mid": 658.8365197478803
+ },
+ "flex": [
+  {
+   "program": "Managed EV charging",
+   "season": "summer",
+   "homes": 2492,
+   "dr_kw_per_home": 1.261381983757019,
+   "dr_mw": 3.1433639526367188,
+   "battery_kw_per_home": 1.2325788736343384
+  },
+  {
+   "program": "Managed EV charging",
+   "season": "winter",
+   "homes": 2492,
+   "dr_kw_per_home": 1.0167077779769897,
+   "dr_mw": 2.5336358547210693,
+   "battery_kw_per_home": 1.0666487216949463
+  },
+  {
+   "program": "AC thermostat",
+   "season": "summer",
+   "homes": 10900,
+   "dr_kw_per_home": 0.16445717215538025,
+   "dr_mw": 1.7925832271575928,
+   "battery_kw_per_home": 1.0710315704345703
+  },
+  {
+   "program": "Heat thermostat",
+   "season": "winter",
+   "homes": 5343,
+   "dr_kw_per_home": 0.2085963636636734,
+   "dr_mw": 1.1145304441452026,
+   "battery_kw_per_home": 0.7685766220092773
+  }
+ ],
+ "flex_tier1": {
+  "summer": {
+   "dr_kw": 0.7220026850700378,
+   "battery_kw": 1.4870235919952393,
+   "dr_mw": 1.6338920593261719
+  },
+  "winter": {
+   "dr_kw": 0.640419602394104,
+   "battery_kw": 1.1368846893310547,
+   "dr_mw": 1.4492695331573486
+  }
+ },
+ "pv": {
+  "homes": 388,
+  "with_battery_detected": 5,
+  "zero_hours_summer": 2.929271590332939,
+  "zero_hours_winter": 0.5657502863688431,
+  "days3_summer": 0.5559827615345614,
+  "days3_winter": 0.09747995418098511,
+  "event_days3_summer": 0.5290378006872852,
+  "event_days3_winter": 0.04845360824742268,
+  "tier1": 34,
+  "tier12": 91,
+  "relief_kw_summer": 0.598925769329071,
+  "relief_kw_winter": 0.8789581060409546,
+  "evening_peak_share": null,
+  "cp_kw_summer": 1.149317979812622,
+  "cp_kw_winter": 2.400630235671997,
+  "recharge_kwh_event_p50": 12.665948867797852
+ },
+ "confidence": [
+  {
+   "appliance": "EV home charging",
+   "homes": 2582,
+   "share": 0.0761045774751672,
+   "confidence": "medium-high",
+   "kappa": 0.7971437727560753,
+   "method": "charging blocks / overnight plateau",
+   "check": "36% of labeled EV homes flagged"
+  },
+  {
+   "appliance": "Electric space heat",
+   "homes": 6584,
+   "share": 0.1940637250567394,
+   "confidence": "high",
+   "kappa": 0.8981580721936242,
+   "method": "cold-weather slope",
+   "check": "55% of labeled HP homes flagged"
+  },
+  {
+   "appliance": "Heat pump",
+   "homes": 1560,
+   "share": 0.045981077018304,
+   "confidence": "medium",
+   "kappa": 0.5598529936859238,
+   "method": "shape of the cold response",
+   "check": "25% of labeled HP homes"
+  },
+  {
+   "appliance": "Central AC",
+   "homes": 13404,
+   "share": 0.3950835617649659,
+   "confidence": "high",
+   "kappa": 0.5929635170126886,
+   "method": "hot-weather slope",
+   "check": "any AC close to the survey"
+  },
+  {
+   "appliance": "Solar PV",
+   "homes": 388,
+   "share": 0.0114363191558345,
+   "confidence": "high",
+   "kappa": 0.9856057699572957,
+   "method": "midday zeros that follow the sun",
+   "check": "90% recall"
+  },
+  {
+   "appliance": "Pool pump",
+   "homes": 227,
+   "share": 0.0066908362071506,
+   "confidence": "medium",
+   "kappa": 0.5549255359279409,
+   "method": "summer timer band",
+   "check": "no labels or survey"
+  },
+  {
+   "appliance": "Water heater",
+   "homes": 1753,
+   "share": 0.0516697615468505,
+   "confidence": "low",
+   "kappa": 0.8573738427338393,
+   "method": "short bursts (blurred hourly)",
+   "check": "well below the survey"
+  },
+  {
+   "appliance": "Hot tub",
+   "homes": 1077,
+   "share": 0.0317446281722521,
+   "confidence": "low",
+   "kappa": 0.8131759991196142,
+   "method": "cycling (blurred hourly)",
+   "check": "no labels or survey"
+  }
+ ],
+ "recall": {
+  "ev": 0.3621621621621622,
+  "eheat_hp": 0.5517241379310345,
+  "hp": 0.25287356321839083,
+  "pv": 0.9015151515151515
+ },
+ "funnel": {
+  "brief_meters": 35725,
+  "in_files": 34238,
+  "modeled": 33927,
+  "absent": 1487
+ },
+ "scaling": {
+  "homes": 34238,
+  "pipeline_min": 12,
+  "raw_min": 3,
+  "matrix_gb": 1.19969952,
+  "gb_per_million": 35.04,
+  "laptop_h_per_million": 7.301828377825808
+ }
+}
