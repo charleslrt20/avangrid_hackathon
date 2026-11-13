@@ -1,0 +1,19 @@
+check,power_violations,soc_violations,export_violations,max_energy_balance_error_kwh,customers_with_new_peak
+"3 kVA cap dispatch, 1 unit(s)",0,0,0,7.283063041541027e-14,0
+"3 kVA cap dispatch, 2 unit(s)",0,0,0,1.1723955140041653e-13,0
+"Adopter homes before HP, today's window",0,0,0,1.7152251611918246e-05,0
+"strict, 5%",0,0,0,1.6358315942710533e-05,0
+"strict_1unit, 5%",0,0,0,9.335905287954915e-06,0
+"relaxed, 5%",0,0,0,1.768076421271303e-05,0
+"coordinated, 5%",0,0,0,1.685809067097921e-05,0
+"perfect foresight (strict recharge), 5%",0,0,0,5.944550000691606e-06,0
+"strict, 15%",0,0,0,1.0024637017380655e-05,0
+"strict_1unit, 15%",0,0,0,6.054341822547826e-06,0
+"relaxed, 15%",0,0,0,1.0728597690246033e-05,0
+"coordinated, 15%",0,0,0,1.161832502916127e-05,0
+"perfect foresight (strict recharge), 15%",0,0,0,7.362812791456008e-06,0
+"strict, 30%",0,0,0,1.0024637017380655e-05,0
+"strict_1unit, 30%",0,0,0,6.054341822547826e-06,0
+"relaxed, 30%",0,0,0,1.077628136059161e-05,0
+"coordinated, 30%",0,0,0,1.2847214943434437e-05,0
+"perfect foresight (strict recharge), 30%",0,0,0,6.937339914969698e-06,0

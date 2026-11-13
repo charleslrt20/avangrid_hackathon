@@ -1,0 +1,12 @@
+metric,value
+Adopters simulated,10178.0
+Median added kW at the home's own peak (new peak - old peak),1.1961145401000977
+P90 added kW at the home's own peak,4.117501735687256
+Median added kW at the future winter system peak hours,2.444093149793759
+"Share exceeding +3 kVA over old peak, no battery",0.20121831401061113
+"Median hours/yr above the cap, no battery (those exceeding)",12.0
+Share still exceeding with 1 unit,0.06425623894674788
+Share still exceeding with 2 units,0.050697583022204756
+"Of those exceeding, share brought within cap by 1 unit",0.6806640625
+"Of those exceeding, share brought within cap by 2 units",0.748046875
+Median kWh/yr above cap left unserved with 2 units (those still exceeding),167.9264727959633

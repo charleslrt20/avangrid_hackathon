@@ -170,6 +170,11 @@ TARIFF = TouTariff()
 
 # --------------------------------------------------------------------------- future scenario
 HP_ADOPTION_SCENARIOS = (0.05, 0.15, 0.30)   # share of customers adding a heat pump
+# Coordinated fleet recharge (task 2.2): overnight plus the winter midday valley between the morning and
+# evening peaks; fleet charging is throttled so it never sets a new system peak (one limit per season, found by
+# bisection so that the event-hour peak equals the recharge ceiling).
+FLEET_RECHARGE_HOURS = tuple(range(0, 6)) + tuple(range(10, 14))
+FLEET_LIMIT_ITERS = 8                        # bisection steps on [0.7, 1.0] x the season's pre-battery peak
 
 # --------------------------------------------------------------------------- outputs
 CUSTOMER_RESULTS = OUTPUTS / "customer_results.parquet"
