@@ -155,7 +155,7 @@ def main() -> None:
     emit("Full lift table (archetype rate / population rate):")
     emit()
     md(lift.round(2).reset_index())
-    pd.DataFrame(centroids, columns=prof.columns[1:]).assign(archetype=range(K_DEFAULT), name=names).to_csv(
+    pd.DataFrame(centroids, columns=prof.columns[1:]).round(6).assign(archetype=range(K_DEFAULT), name=names).to_csv(
         C.OUTPUTS_SUMMARY / "archetype_centroids.csv", index=False)
     ct = pd.crosstab(out.segment, out.archetype)
     ct = ct.reindex([s for s in S.SEGMENT_ORDER if s in ct.index])

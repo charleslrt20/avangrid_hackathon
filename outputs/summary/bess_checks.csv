@@ -1,0 +1,5 @@
+variant,power_violations,soc_violations,export_violations,max_energy_balance_error_kwh,customers_with_new_peak,total_discharge_mwh,total_charge_mwh
+"Perfect foresight, 2 units",0,0,0,9.357422609213017e-06,0,5494.09423828125,6145.4609375
+"Realistic, 2 units",0,0,0,1.8315374827437836e-05,0,5644.56201171875,6313.7607421875
+"Realistic, 1 unit",0,0,0,1.0398328283756086e-05,0,4272.19287109375,4778.73779296875
+"Realistic, 2 units, 20% backup reserve",0,0,0,9.013414423719723e-06,0,5236.4658203125,5857.31005859375

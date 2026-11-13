@@ -115,6 +115,18 @@ SOC_MIN_SENSITIVITY = (0.0, 0.2)
 RECHARGE_HOURS = tuple(range(0, 6))      # hour-starting 00-05: off-peak in both seasons
 DR_REBOUND_SHARE = 1.0                   # shifted kWh fully reappears in adjacent hours (conservative)
 
+# Realistic dispatch: the utility calls a budget of events on the hottest / coldest *forecast* days and
+# discharges flat over a fixed window, not knowing the exact peak hours. Windows cover the most system
+# top hours (outputs/summary/system_peaks.csv): summer HE15-20 (63/88), winter HE16-21 (69/88).
+EVENT_BUDGET_PER_SEASON = 15             # typical DR program call budget
+FORECAST_SD_F = 2.0                      # day-ahead daily-mean temperature forecast error (s.d.)
+WINDOW_HOURS = {"summer": tuple(range(14, 20)), "winter": tuple(range(15, 21))}   # hour-starting
+CANDIDATE_MIN_CP_KW = 1.5                # below this, a battery has too little coincident load to offset
+# Demand flexibility (no battery): thermostat shed during events, shifted energy rebounds afterwards
+DR_AC_SHED_FRAC = 0.30                   # share of cooling load shed by a setback / pre-cool event
+DR_HEAT_SHED_FRAC = 0.20                 # share of electric heating load shed (smart thermostat)
+DR_REBOUND_HOURS = 2                     # rebound lands in the hours right after the window
+
 # --------------------------------------------------------------------------- service headroom (brief)
 HEADROOM_KVA = 3.0                # 200 A service: <= ~3 kVA incremental load without further evaluation
 POWER_FACTOR = 1.0                # ASSUMPTION: residential load ~unity PF, so kVA ~= kW on hourly data
