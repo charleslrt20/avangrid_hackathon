@@ -15,7 +15,7 @@ This page explains how the pipeline works, step by step. Results and the full ta
 | Winter-peaking future (heat-pump adoption) | `08b_future.py` | [future.md](future.md) |
 | Validation | `09a_validate.py` | [validation.md](validation.md) |
 | Segment cards and program playbook | `09_insights.py` | [insights/](insights/) |
-| Deck figures and deck numbers | `10_figures.py`, `11_deck_facts.py` | [../deck/figure_list.md](../deck/figure_list.md) |
+| Deck figures | `10_figures.py` | [figures/](figures/) |
 
 ## 1. Data
 

@@ -17,5 +17,3 @@ streamlit==1.67.0      # demo app
 
 # Optional, not needed for the pipeline:
 #   playwright==1.63.0   app/screenshots.py (also needs Google Chrome)
-#   pymupdf==1.28.2      deck/build.sh --render (also needs Microsoft PowerPoint, macOS)
-# The deck itself is built with Node.js + pptxgenjs (deck/package.json): cd deck && npm ci

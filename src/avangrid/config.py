@@ -23,7 +23,6 @@ MODELS = ROOT / "models"                       # fitted models (gitignored: trai
 DOCS = ROOT / "docs"
 FIGURES = DOCS / "figures"
 INSIGHTS = DOCS / "insights"
-DECK = ROOT / "deck"
 
 LOAD_MATRIX = DATA_PROC / "load_matrix.npy"            # float32 [n_customers, 8760], NaN = no reading
 CUSTOMER_INDEX = DATA_PROC / "customer_index.parquet"  # row order of the matrix + coverage + labels
@@ -181,6 +180,6 @@ CUSTOMER_RESULTS = OUTPUTS / "customer_results.parquet"
 
 
 def ensure_dirs() -> None:
-    for d in (OUTPUTS, OUTPUTS_SUMMARY, MODELS, FIGURES, INSIGHTS, DECK):
+    for d in (OUTPUTS, OUTPUTS_SUMMARY, MODELS, FIGURES, INSIGHTS):
         d.mkdir(parents=True, exist_ok=True)
 

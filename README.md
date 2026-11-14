@@ -13,7 +13,7 @@ weather series, and:
    more heat pumps.
 
 The main output is one table with a row per customer (`outputs/customer_results.csv`, see [The tool's
-output](#the-tools-output-one-row-per-customer)). The slide deck, a demo app and one results page per stage in
+output](#the-tools-output-one-row-per-customer)). The deck's figures and numbers, a demo app and one results page per stage in
 [docs/](docs/) are built from the same run.
 
 **Contents:** [Main findings](#main-findings) · [Quick start](#quick-start-for-a-fresh-clone) ·
@@ -38,7 +38,7 @@ output](#the-tools-output-one-row-per-customer)). The slide deck, a demo app and
 - **About 16 GB of RAM and 5 GB of free disk** (the processed load matrix alone is 1.2 GB).
 - **The hackathon data**, which is *not* in this repo. Avangrid sent it to each team by email and SharePoint. It is for
   use in this hackathon only, so never commit or share it.
-- Optional: Node.js 18+ to rebuild the deck; Google Chrome to retake app screenshots.
+- Optional: Google Chrome to retake app screenshots.
 
 ### 2. Install
 
@@ -192,9 +192,8 @@ repo root) once the steps before it have run.
 | Heat-pump adoption scenarios | `08b_future.py` | `outputs/future_adopters.parquet` | [future.md](docs/future.md) |
 | Validation (37 checks) | `09a_validate.py` | summary tables | [validation.md](docs/validation.md) |
 | Segment cards, program playbook | `09_insights.py` | `docs/insights/` | [playbook.md](docs/insights/playbook.md) |
-| Deck figures | `10_figures.py` | `docs/figures/` | [figure_list.md](deck/figure_list.md) |
+| Deck figures | `10_figures.py` | `docs/figures/` | [figures/](docs/figures/) |
 | Per-customer results (the tool's output) | `13_customer_results.py` | `outputs/customer_results.csv` | this README |
-| Deck facts and number audit (run by `deck/build.sh`) | `11_deck_facts.py`, `12_number_audit.py` | `deck/facts.json` | [number_audit.md](docs/number_audit.md) |
 
 Every step also writes aggregate tables to `outputs/summary/` (committed) and figures to `docs/figures/`.
 
@@ -217,20 +216,8 @@ Customer IDs are shown as aliases by default (sidebar toggle). `python app/scree
 
 ## Deck
 
-The submitted deck is `deck/08_MIT Climate Hackers_Final Submission.pptx`. To rebuild it after a pipeline change:
-
-```bash
-(cd deck && npm ci)           # once: installs pptxgenjs
-bash deck/build.sh            # 11_deck_facts.py → deck/facts.json → deck/build_deck.js → .pptx → 12_number_audit.py
-bash deck/build.sh --render   # also renders slide PNGs (macOS + Microsoft PowerPoint + pip install pymupdf)
-```
-
-Every number on the slides comes from `deck/facts.json`, which is built from the pipeline outputs. The build ends with
-a number audit that checks every slide, speaker note and README finding against the facts. It fails if anything
-doesn't match (see [docs/number_audit.md](docs/number_audit.md)). `deck/team.json` sets the team name, the file name and which slides get speaker notes (the submitted
-deck has notes on the appendix slides only).
-Optionally, setting `PPTX_SKILL` to a folder containing `scripts/apply_theme.js` also writes the brand colours into
-the theme.
+The slides are kept in the team's Google Drive, not in this repo. Their figures come from `docs/figures/`
+(`10_figures.py`) and their numbers from the aggregate tables in `outputs/summary/`.
 
 ## Repository layout
 
@@ -240,8 +227,7 @@ src/avangrid/   the package: config.py (every constant and assumption), io.py (l
                 features/ (weather, events, shape), classify, segment, decompose, drivers, bess, future,
                 validate, insights + insight_text (cards and playbook), plots, app_data (app data layer)
 app/            Streamlit demo and screenshot script
-docs/           methodology.md, one results page per stage, number_audit.md, figures/, insights/
-deck/           deck builder (pptxgenjs), facts.json, team.json, assets, final .pptx
+docs/           methodology.md, one results page per stage, figures/, insights/
 outputs/        customer-level results (gitignored); outputs/summary/ aggregate CSVs (committed)
 data_processed/ Parquet + load matrix built from Data/ (gitignored)
 models/         fitted PU models (gitignored)
@@ -256,7 +242,7 @@ battery dispatch.
 ## Assumptions and placeholders
 
 `src/avangrid/config.py` holds every assumption, so changing a value and rerunning updates everything downstream,
-including the deck.
+including the figures and summary tables.
 
 - **Battery:** 2 × Enphase IQ 10C (20.16 kWh, 7.68 kW, 89.4% round-trip efficiency), from the brief.
 - **3 kVA headroom rule** for 200 A service, from the brief.
@@ -274,7 +260,6 @@ including the deck.
 | A later step fails with a missing `outputs/...parquet` | Run the earlier steps first: `bash scripts/run_all.sh` runs them all in order. |
 | Out of memory | Close other apps; the pipeline memory-maps the 1.2 GB load matrix and needs about 16 GB of RAM in total. |
 | The app fails with a missing-file error | Run the pipeline before `streamlit run app/streamlit_app.py`. |
-| `deck/build.sh` fails at the number audit | A slide shows a number that isn't in `deck/facts.json`. Read `docs/number_audit.md` and fix the slide text or `11_deck_facts.py`. |
 
 ## Data handling and LLM use
 
